@@ -1,0 +1,6 @@
+@use './fonts';
+@use './colors';
+@import '~normalize-scss/sass/normalize';
+@import './../../node_modules/bootstrap/scss/bootstrap';
+@import './NavBar.scss';
+@import './HomePage.scss';
