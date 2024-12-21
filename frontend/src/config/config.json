@@ -24,5 +24,67 @@
             "id": 6,
             "name": "Dr. David Wilson"
         }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "name": "Alice Smith",
+            "assignedDoctorId": 1
+        },
+        {
+            "id": 2,
+            "name": "Bob Johnson",
+            "assignedDoctorId": 1
+        },
+        {
+            "id": 3,
+            "name": "Charlie Brown",
+            "assignedDoctorId": 1
+        },
+        {
+            "id": 4,
+            "name": "Daisy Green",
+            "assignedDoctorId": 2
+        },
+        {
+            "id": 5,
+            "name": "Ethan White",
+            "assignedDoctorId": 2
+        },
+        {
+            "id": 6,
+            "name": "Fiona Black",
+            "assignedDoctorId": 2
+        },
+        {
+            "id": 7,
+            "name": "George Blue",
+            "assignedDoctorId": 3
+        },
+        {
+            "id": 8,
+            "name": "Hannah Yellow",
+            "assignedDoctorId": 3
+        },
+        {
+            "id": 9,
+            "name": "Ivy Orange",
+            "assignedDoctorId": 3
+        },
+        {
+            "id": 10,
+            "name": "Jack Red",
+            "assignedDoctorId": 4
+        },
+        {
+            "id": 11,
+            "name": "Karen Purple",
+            "assignedDoctorId": 4
+        },
+        {
+            "id": 12,
+            "name": "Leo Silver",
+            "assignedDoctorId": 4
+        }
     ]
 }
