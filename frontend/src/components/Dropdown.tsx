@@ -1,11 +1,12 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Doctor } from "./Types/doctorDropdown.interface";
-import data from "../config/config.json";
 
-const DoctorDropdown: React.FC = () => {
-    const doctors: Doctor[] = data.doctors;
+interface DropdownProps {
+    doctors: Doctor[];
+}
 
+const DoctorDropdown: React.FC<DropdownProps> = ({ doctors }) => {
     return (
         <Dropdown>
             <Dropdown.Toggle variant="primary" className="dropdown-basic">
