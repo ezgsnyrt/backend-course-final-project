@@ -1,0 +1,29 @@
+.dropdown-basic {
+    background-color: colors.$bg-color3;
+    color: colors.$primary-color;
+    font-weight: fonts.$font-weight-medium;
+    border-radius: 0.5rem;
+    font-size: fonts.$font-size-md;
+
+    &:hover {
+        background-color: colors.$hover-color3;
+    }
+}
+
+.dropdown-menu {
+    background-color: colors.$bg-color4;
+    border: 1px solid colors.$border-color1;
+    border-radius: 0.5rem;
+
+
+    .dropdown-item {
+        color: colors.$text-color1;
+        padding: 0.3rem 1rem;
+        font-size: fonts.$font-size-md;
+
+        &:hover {
+            background-color: colors.$bg-color5;
+            color: colors.$hover-color4;
+        }
+    }
+}

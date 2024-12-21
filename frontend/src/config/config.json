@@ -1,0 +1,28 @@
+{
+    "doctors": [
+        {
+            "id": 1,
+            "name": "Dr. John Doe"
+        },
+        {
+            "id": 2,
+            "name": "Dr. Jane Smith"
+        },
+        {
+            "id": 3,
+            "name": "Dr. Emily Johnson"
+        },
+        {
+            "id": 4,
+            "name": "Dr. Michael Brown"
+        },
+        {
+            "id": 5,
+            "name": "Dr. Sarah Davis"
+        },
+        {
+            "id": 6,
+            "name": "Dr. David Wilson"
+        }
+    ]
+}
