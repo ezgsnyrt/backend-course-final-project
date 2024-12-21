@@ -4,7 +4,7 @@
     background-color: colors.$bg-color1;
 
     .brand,
-    .navLink {
+    .nav-link {
         font-family: fonts.$secondary-ff;
     }
 
@@ -20,7 +20,7 @@
         }
     }
 
-    .navLink {
+    .nav-link {
         margin: 0 1rem;
         font-size: fonts.$font-size-md;
         color: colors.$primary-color;

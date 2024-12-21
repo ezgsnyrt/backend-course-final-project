@@ -2,16 +2,13 @@ import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserMd, faHospital, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const NavBar: React.FC = () => {
     return (
-        <Navbar
-            expand="lg"
-            className="navBar"
-            sticky="top"
-        >
+        <Navbar expand="lg" className="navBar" sticky="top">
             <Container>
-                <Navbar.Brand href="#home" className="brand">
+                <Navbar.Brand as={Link} to="/" className="brand">
                     <FontAwesomeIcon icon={faHospital} className="me-2" />
                     DocApp
                 </Navbar.Brand>
@@ -21,17 +18,23 @@ const NavBar: React.FC = () => {
                 />
                 <Navbar.Collapse id="navbar-nav">
                     <Nav className="ms-auto">
-                        <Nav.Link href="#home" className="navLink">
-                            Home
-                        </Nav.Link>
-                        <Nav.Link href="#doctors" className="navLink">
-                            <FontAwesomeIcon icon={faUserMd} className="me-2" />
-                            Doctors
-                        </Nav.Link>
-                        <Nav.Link href="#users" className="navLink">
-                            <FontAwesomeIcon icon={faUsers} className="me-2" />
-                            Users
-                        </Nav.Link>
+                        <Nav.Item>
+                            <Nav.Link as={Link} to="/" className="nav-link">
+                                Home
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link as={Link} to="/doctors" className="nav-link">
+                                <FontAwesomeIcon icon={faUserMd} className="me-2" />
+                                Doctors
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link as={Link} to="/users" className="nav-link">
+                                <FontAwesomeIcon icon={faUsers} className="me-2" />
+                                Users
+                            </Nav.Link>
+                        </Nav.Item>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
