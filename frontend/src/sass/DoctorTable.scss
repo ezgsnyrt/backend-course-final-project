@@ -54,3 +54,31 @@ table {
         }
     }
 }
+
+// Button styles
+.button-delete,
+.button-create {
+    font-size: fonts.$font-size-xs;
+    color: colors.$primary-color;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+}
+
+.button-create {
+    background-color: colors.$button-color2;
+
+    &:hover {
+        background-color: colors.$hover-color7;
+    }
+}
+
+.button-delete {
+    background-color: colors.$button-color1;
+    margin-top: 0.3rem;
+
+    &:hover {
+        background-color: colors.$hover-color6;
+    }
+}
