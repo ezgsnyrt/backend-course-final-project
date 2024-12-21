@@ -1,0 +1,50 @@
+.navBar {
+    display: flex;
+    align-items: center;
+    background-color: colors.$bg-color1;
+
+    .brand,
+    .navLink {
+        font-family: fonts.$secondary-ff;
+    }
+
+    .brand {
+        font-size: fonts.$font-size-xl;
+        font-weight: fonts.$font-weight-bold;
+        color: colors.$primary-color;
+        letter-spacing: fonts.$letter-spacing-xs;
+        text-decoration: none;
+
+        &:hover {
+            color: colors.$hover-color1;
+        }
+    }
+
+    .navLink {
+        margin: 0 1rem;
+        font-size: fonts.$font-size-md;
+        color: colors.$primary-color;
+        font-weight: fonts.$font-weight-medium;
+        text-decoration: none;
+
+        &:hover {
+            color: colors.$bg-color2;
+            border-bottom: 2px solid colors.$primary-color;
+        }
+
+        &.active {
+            color: colors.$active-color1;
+            background-color: colors.$bg-color2;
+            font-weight: fonts.$font-weight-bold;
+        }
+
+        svg {
+            margin-right: 0.5rem;
+        }
+    }
+
+    .navbar-toggler {
+        color: colors.$hover-color1;
+        background-color: colors.$primary-color;
+    }
+}
