@@ -2,27 +2,114 @@
     "doctors": [
         {
             "id": 1,
-            "name": "Dr. John Doe"
+            "name": "Dr. John Doe",
+            "title": "Prof.",
+            "major": "Cardiology",
+            "contact": {
+                "phone": "123-456-7890",
+                "email": "johndoe@example.com"
+            },
+            "languages": [
+                "English",
+                "Swedish"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 2,
-            "name": "Dr. Jane Smith"
+            "name": "Dr. Jane Smith",
+            "title": "Assist. Prof.",
+            "major": "Neurology",
+            "contact": {
+                "phone": "234-567-8901",
+                "email": "janesmith@example.com"
+            },
+            "languages": [
+                "English",
+                "French",
+                "Swedish"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 3,
-            "name": "Dr. Emily Johnson"
+            "name": "Dr. Emily Johnson",
+            "title": "Prof.",
+            "major": "Hematology",
+            "contact": {
+                "phone": "345-678-9012",
+                "email": "emilyjohnson@example.com"
+            },
+            "languages": [
+                "English",
+                "German"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 4,
-            "name": "Dr. Michael Brown"
+            "name": "Dr. Michael Brown",
+            "title": "Assoc. Prof.",
+            "major": "Oncology",
+            "contact": {
+                "phone": "456-789-0123",
+                "email": "michaelbrown@example.com"
+            },
+            "languages": [
+                "English",
+                "Swedish",
+                "Spanish"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 5,
-            "name": "Dr. Sarah Davis"
+            "name": "Dr. Sarah Davis",
+            "title": "Assist. Prof.",
+            "major": "Pediatrics",
+            "contact": {
+                "phone": "567-890-1234",
+                "email": "sarahdavis@example.com"
+            },
+            "languages": [
+                "English",
+                "Swedish",
+                "Turkish"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 6,
-            "name": "Dr. David Wilson"
+            "name": "Dr. David Wilson",
+            "title": "Prof.",
+            "major": "Internal Medicine",
+            "contact": {
+                "phone": "678-901-2345",
+                "email": "davidwilson@example.com"
+            },
+            "languages": [
+                "English",
+                "Norwegian"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         }
     ],
     "users": [
