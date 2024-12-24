@@ -59,6 +59,14 @@ const DoctorDetailsTable: React.FC = () => {
     // Add a new doctor to the doctors state by reseting the form after submission
     // Close the modal
     const handleSubmit = () => {
+      const { name, title, major, phone, email, languages } = newDoctor;
+
+      // Form validation to check all reqired fields are filled
+      if (!name || !title || !major || !phone || !email || languages?.length === 0) {
+        alert("All fields are required. Please, fill out the form completely");
+        return;
+      }
+
       setDoctors([...doctors, { ...newDoctor, id: doctors.length +1}]);
       setNewDoctor({
         id: doctors.length + 2,
@@ -131,7 +139,8 @@ const DoctorDetailsTable: React.FC = () => {
                       name="name"
                       value={newDoctor.name}
                       onChange={handleChange}
-                      placeholder="Enter name"
+                      placeholder="Enter full name"
+                      required
                     />
                   </Form.Group>
                   <Form.Group controlId="formTitle" className="mb-3">
@@ -142,6 +151,7 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.title}
                       onChange={handleChange}
                       placeholder="Enter title"
+                      required
                     />
                   </Form.Group>
                   <Form.Group controlId="formMajor" className="mb-3">
@@ -152,16 +162,18 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.major}
                       onChange={handleChange}
                       placeholder="Enter major"
+                      required
                     />
                   </Form.Group>
                   <Form.Group controlId="formPhone" className="mb-3">
                     <Form.Label>Phone</Form.Label>
                     <Form.Control
-                      type="text"
+                      type="phone"
                       name="phone"
                       value={newDoctor.phone}
                       onChange={handleChange}
                       placeholder="Enter phone"
+                      required
                     />
                   </Form.Group>
                   <Form.Group controlId="formEmail" className="mb-3">
@@ -172,6 +184,7 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.email}
                       onChange={handleChange}
                       placeholder="Enter email"
+                      required
                     />
                   </Form.Group>
                   <Form.Group controlId="formLanguages" className="mb-3">
@@ -182,6 +195,7 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.languages?.join(", ")}
                       onChange={handleChange}
                       placeholder="Enter languages (comma-separated)"
+                      required
                     />
                   </Form.Group>
                 </Form>
