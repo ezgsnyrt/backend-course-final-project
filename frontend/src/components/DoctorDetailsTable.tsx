@@ -21,6 +21,16 @@ const DoctorDetailsTable: React.FC = () => {
       actions: { update: "Update", delete: "Delete" },
     });
 
+    // Control errors
+    const [errors, setErrors] = useState({
+      name: "",
+      title: "",
+      major: "",
+      phone: "",
+      email: "",
+      languages: ""
+    });
+
     // Define table structure which includes columns with keys and a label (column header)
     const columns = [
         { key: "id", label: "ID" },
@@ -46,6 +56,7 @@ const DoctorDetailsTable: React.FC = () => {
     // Update newDoctor state while the uer fills out the form
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
+      setErrors({ ...errors, [name]: "" }) // Clear error for the field being edited
       if (name === "languages") {
         setNewDoctor({
           ...newDoctor,
@@ -56,14 +67,28 @@ const DoctorDetailsTable: React.FC = () => {
       }
     };
 
+    // Validate form
+    const validateForm = () => {
+      const newErrors: any = {};
+      if(!newDoctor.name) newErrors.name = "Name is required!";
+      if(!newDoctor.title) newErrors.title = "Title is required!";
+      if(!newDoctor.major) newErrors.major = "Major is required!";
+      if(!newDoctor.phone || !/^0[1-9]\d{7,8}$/.test(newDoctor.phone)) {
+        newErrors.phone = newDoctor.phone ? "Invalid phone number!" : "Phone is required!"
+      }
+      if(!newDoctor.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newDoctor.email)) {
+        newErrors.email = newDoctor.email ? "Invalid email format!" : "Email is required!"
+      }
+      if (!newDoctor.languages || newDoctor.languages.length === 0) newErrors.languages = "At least one language is required.";
+
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    }
+
     // Add a new doctor to the doctors state by reseting the form after submission
     // Close the modal
     const handleSubmit = () => {
-      const { name, title, major, phone, email, languages } = newDoctor;
-
-      // Form validation to check all reqired fields are filled
-      if (!name || !title || !major || !phone || !email || languages?.length === 0) {
-        alert("All fields are required. Please, fill out the form completely");
+      if(!validateForm()) {
         return;
       }
 
@@ -140,8 +165,11 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.name}
                       onChange={handleChange}
                       placeholder="Enter full name"
-                      required
+                      isInvalid={!!errors.name}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.name}
+                    </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formTitle" className="mb-3">
                     <Form.Label>Title</Form.Label>
@@ -151,8 +179,11 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.title}
                       onChange={handleChange}
                       placeholder="Enter title"
-                      required
+                      isInvalid={!!errors.title}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.title}
+                    </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formMajor" className="mb-3">
                     <Form.Label>Major</Form.Label>
@@ -162,8 +193,11 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.major}
                       onChange={handleChange}
                       placeholder="Enter major"
-                      required
+                      isInvalid={!!errors.major}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.major}
+                    </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formPhone" className="mb-3">
                     <Form.Label>Phone</Form.Label>
@@ -173,8 +207,14 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.phone}
                       onChange={handleChange}
                       placeholder="Enter phone"
-                      required
+                      isInvalid={!!errors.phone}
                     />
+                    <Form.Text className="text-muted">
+                      Must be 9 or 10 digits, starting with 0. E.g., 012345678 or 0123456789
+                    </Form.Text>
+                    <Form.Control.Feedback type="invalid">
+                        {errors.phone}
+                    </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formEmail" className="mb-3">
                     <Form.Label>Email</Form.Label>
@@ -184,8 +224,14 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.email}
                       onChange={handleChange}
                       placeholder="Enter email"
-                      required
+                      isInvalid={!!errors.email}
                     />
+                    <Form.Text className="text-muted">
+                      E.g., email@example.com
+                    </Form.Text>
+                    <Form.Control.Feedback type="invalid">
+                        {errors.email}
+                    </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formLanguages" className="mb-3">
                     <Form.Label>Languages</Form.Label>
@@ -195,8 +241,11 @@ const DoctorDetailsTable: React.FC = () => {
                       value={newDoctor.languages?.join(", ")}
                       onChange={handleChange}
                       placeholder="Enter languages (comma-separated)"
-                      required
+                      isInvalid={!!errors.languages}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.languages}
+                    </Form.Control.Feedback>
                   </Form.Group>
                 </Form>
               </Modal.Body>
