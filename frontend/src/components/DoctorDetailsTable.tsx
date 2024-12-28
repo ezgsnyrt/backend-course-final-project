@@ -82,18 +82,14 @@ const DoctorDetailsTable: React.FC = () => {
       if(!newDoctor.title) newErrors.title = "Title is required!";
       if(!newDoctor.major) newErrors.major = "Major is required!";
 
-      // Create a local empty object to store error messages for email and phone if any validation issues are found.
-      let contact: any = {};
+      // Initiate nested contact property to handle nested structures like contact.phone and contact.email within validateForm
       if(!newDoctor.contact?.phone || !/^0[1-9]\d{7,8}$/.test(newDoctor.contact.phone)) {
-        contact.phone = newDoctor.contact?.phone ? "Invalid phone number!" : "Phone is required!"
+        newErrors.contact = newErrors.contact || {};
+        newErrors.contact.phone = newDoctor.contact?.phone ? "Invalid phone number!" : "Phone is required!"
       }
       if(!newDoctor.contact?.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newDoctor.contact.email)) {
-        contact.email = newDoctor.contact?.email ? "Invalid email format!" : "Email is required!"
-      }
-
-      // Handle nested structures like contact.phone and contact.email within validateForm
-      if (Object.keys(contact).length !== 0) {
-        newErrors.contact = contact;
+        newErrors.contact = newErrors.contact || {};
+        newErrors.contact.email = newDoctor.contact?.email ? "Invalid email format!" : "Email is required!"
       }
 
       if (!newDoctor.languages || newDoctor.languages.length === 0) newErrors.languages = "At least one language is required.";
