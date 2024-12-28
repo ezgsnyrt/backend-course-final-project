@@ -1,7 +1,7 @@
 import React from "react";
 import { DoctorTableProps } from "./Types/doctorDropdown.interface";
 
-const DoctorTable: React.FC<DoctorTableProps> = ({ users }) => {
+const DoctorTable: React.FC<DoctorTableProps> = ({ patients }) => {
     const timeSlots = [
         "08:00-09:00",
         "09:00-10:00",
@@ -27,8 +27,8 @@ const DoctorTable: React.FC<DoctorTableProps> = ({ users }) => {
 
     // Randomly assign a user or leave the cell empty
     const getRandomCellData = () => {
-        const randomIndex = Math.floor(Math.random() * (users.length + 1)); // Adds a chance for an empty cell
-        return randomIndex < users.length ? users[randomIndex].name : null; // Returns null for an empty cell
+        const randomIndex = Math.floor(Math.random() * (patients.length + 1)); // Adds a chance for an empty cell
+        return randomIndex < patients.length ? patients[randomIndex].name : null; // Returns null for an empty cell
     };
 
     const handleCreate = (timeSlot: string, day: string) => {

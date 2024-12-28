@@ -14,5 +14,5 @@ export interface Doctor {
 
 export interface DoctorTableProps {
     doctors: Doctor[];
-    users: { id: number; name: string }[];
+    patients: { id: number; name: string }[];
 }

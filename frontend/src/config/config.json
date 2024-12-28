@@ -100,66 +100,168 @@
             }
         }
     ],
-    "users": [
+    "patients": [
         {
             "id": 1,
             "name": "Alice Smith",
-            "assignedDoctorId": 1
+            "age": 29,
+            "gender": "Female",
+            "phone": "123-456-7891",
+            "email": "alicesmith@example.com",
+            "address": "123 Maple St, Springfield",
+            "medicalHistory": [
+                "Asthma",
+                "Allergy to penicillin"
+            ]
         },
         {
             "id": 2,
             "name": "Bob Johnson",
-            "assignedDoctorId": 1
+            "age": 45,
+            "gender": "Male",
+            "phone": "234-567-8902",
+            "email": "bobjohnson@example.com",
+            "address": "456 Oak St, Springfield",
+            "medicalHistory": [
+                "Hypertension"
+            ]
         },
         {
             "id": 3,
             "name": "Charlie Brown",
-            "assignedDoctorId": 1
+            "age": 38,
+            "gender": "Male",
+            "phone": "345-678-9013",
+            "email": "charliebrown@example.com",
+            "address": "789 Pine St, Springfield",
+            "medicalHistory": [
+                "Type 2 Diabetes",
+                "High Cholesterol"
+            ]
         },
         {
             "id": 4,
             "name": "Daisy Green",
-            "assignedDoctorId": 2
+            "age": 34,
+            "gender": "Female",
+            "phone": "456-789-0124",
+            "email": "daisygreen@example.com",
+            "address": "321 Elm St, Springfield",
+            "medicalHistory": [
+                "Migraines"
+            ]
         },
         {
             "id": 5,
             "name": "Ethan White",
-            "assignedDoctorId": 2
+            "age": 27,
+            "gender": "Male",
+            "phone": "567-890-1235",
+            "email": "ethanwhite@example.com",
+            "address": "654 Cedar St, Springfield",
+            "medicalHistory": [
+                "Seasonal Allergies"
+            ]
         },
         {
             "id": 6,
             "name": "Fiona Black",
-            "assignedDoctorId": 2
+            "age": 50,
+            "gender": "Female",
+            "phone": "678-901-2346",
+            "email": "fionablack@example.com",
+            "address": "987 Birch St, Springfield",
+            "medicalHistory": [
+                "Arthritis",
+                "Vitamin D Deficiency"
+            ]
         },
         {
             "id": 7,
             "name": "George Blue",
-            "assignedDoctorId": 3
+            "age": 42,
+            "gender": "Male",
+            "phone": "789-012-3457",
+            "email": "georgeblue@example.com",
+            "address": "123 Willow St, Springfield",
+            "medicalHistory": [
+                "Hypothyroidism"
+            ]
         },
         {
             "id": 8,
             "name": "Hannah Yellow",
-            "assignedDoctorId": 3
+            "age": 36,
+            "gender": "Female",
+            "phone": "890-123-4568",
+            "email": "hannahyellow@example.com",
+            "address": "456 Maple St, Springfield",
+            "medicalHistory": [
+                "Depression",
+                "Anxiety"
+            ]
         },
         {
             "id": 9,
             "name": "Ivy Orange",
-            "assignedDoctorId": 3
+            "age": 31,
+            "gender": "Female",
+            "phone": "901-234-5679",
+            "email": "ivyorange@example.com",
+            "address": "789 Oak St, Springfield",
+            "medicalHistory": [
+                "Eczema"
+            ]
         },
         {
             "id": 10,
-            "name": "Jack Red",
-            "assignedDoctorId": 4
+            "name": "Jake Green",
+            "age": 28,
+            "gender": "Male",
+            "phone": "902-345-6789",
+            "email": "jakegreen@example.com",
+            "address": "456 Willow St, Springfield",
+            "medicalHistory": ["Asthma"]
         },
         {
             "id": 11,
-            "name": "Karen Purple",
-            "assignedDoctorId": 4
+            "name": "Laura Black",
+            "age": 40,
+            "gender": "Female",
+            "phone": "903-456-7890",
+            "email": "laurablack@example.com",
+            "address": "789 Cedar St, Springfield",
+            "medicalHistory": ["High Blood Pressure"]
         },
         {
             "id": 12,
-            "name": "Leo Silver",
-            "assignedDoctorId": 4
+            "name": "Martin Silver",
+            "age": 35,
+            "gender": "Male",
+            "phone": "904-567-8901",
+            "email": "martinsilver@example.com",
+            "address": "321 Pine St, Springfield",
+            "medicalHistory": ["Seasonal Allergies", "Migraine"]
+        },
+        {
+            "id": 13,
+            "name": "Sophia White",
+            "age": 29,
+            "gender": "Female",
+            "phone": "905-678-9012",
+            "email": "sophiawhite@example.com",
+            "address": "654 Oak St, Springfield",
+            "medicalHistory": ["Eczema", "Anxiety"]
+        },
+        {
+            "id": 14,
+            "name": "Evan Blue",
+            "age": 33,
+            "gender": "Male",
+            "phone": "906-789-0123",
+            "email": "evanblue@example.com",
+            "address": "987 Birch St, Springfield",
+            "medicalHistory": ["Type 1 Diabetes"]
         }
     ]
 }

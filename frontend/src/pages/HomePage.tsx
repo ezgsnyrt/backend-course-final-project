@@ -8,13 +8,13 @@ import { Doctor } from "../components/Types/doctorDropdown.interface";
 const HomePage = () => {
     // State for doctors and users
     const [doctors, setDoctors] = useState<Doctor[]>([]);
-    const [users, setUsers] = useState<any[]>([]); // Adjust type if you have a Users interface
+    const [patients, setPatients] = useState<any[]>([]); // Adjust type if you have a Patients interface
 
-    // Fetch doctors and users data
+    // Fetch doctors and patients data
     useEffect(() => {
         // Simulate fetching data
         setDoctors(data.doctors);
-        setUsers(data.users);
+        setPatients(data.patients);
     }, []);
 
     return (
@@ -22,8 +22,8 @@ const HomePage = () => {
             <NavBar />
             {/* Pass doctors data to Dropdown */}
             <Dropdown doctors={doctors} />
-            {/* Pass doctors and users data to DoctorTable */}
-            <DoctorTable doctors={doctors} users={users} />
+            {/* Pass doctors and patients data to DoctorTable */}
+            <DoctorTable doctors={doctors} patients={patients} />
         </div>
     );
 };
