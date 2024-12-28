@@ -3,8 +3,10 @@ export interface Doctor {
     name: string;
     title?: string;
     major?: string;
-    phone?: string;
-    email?: string;
+    contact?: {
+        phone?: string;
+        email?: string;
+    };
     languages?: string[];
     actions?: {
         update: string;

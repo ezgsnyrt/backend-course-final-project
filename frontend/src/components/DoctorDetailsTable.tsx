@@ -15,8 +15,7 @@ const DoctorDetailsTable: React.FC = () => {
       name: "",
       title: "",
       major: "",
-      phone: "",
-      email: "",
+      contact: { phone: "", email: "" },
       languages: [],
       actions: { update: "Update", delete: "Delete" },
     });
@@ -26,8 +25,10 @@ const DoctorDetailsTable: React.FC = () => {
       name: "",
       title: "",
       major: "",
-      phone: "",
-      email: "",
+      contact: {
+        phone: "",
+        email: ""
+      },
       languages: ""
     });
 
@@ -56,12 +57,19 @@ const DoctorDetailsTable: React.FC = () => {
     // Update newDoctor state while the uer fills out the form
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
-      setErrors({ ...errors, [name]: "" }) // Clear error for the field being edited
+      console.log(errors);
+      // setErrors({ ...errors, [name]: "" }) // Clear error for the field being edited
       if (name === "languages") {
         setNewDoctor({
           ...newDoctor,
           languages: value.split(",").map((lang) => lang.trim()), // Splip & trim comma-separated languages into array
         })
+      }
+      else if (name === "phone" || name === 'email') {
+        let contact = { ...newDoctor?.contact, [name]: value };
+        setNewDoctor({ ...newDoctor, "contact": contact });
+
+        // setNewDoctor({ ...newDoctor, "contact": { [name]: value } });
       } else {
         setNewDoctor({ ...newDoctor, [name]: value });
       }
@@ -73,15 +81,26 @@ const DoctorDetailsTable: React.FC = () => {
       if(!newDoctor.name) newErrors.name = "Name is required!";
       if(!newDoctor.title) newErrors.title = "Title is required!";
       if(!newDoctor.major) newErrors.major = "Major is required!";
-      if(!newDoctor.phone || !/^0[1-9]\d{7,8}$/.test(newDoctor.phone)) {
-        newErrors.phone = newDoctor.phone ? "Invalid phone number!" : "Phone is required!"
+
+      // Create a local empty object to store error messages for email and phone if any validation issues are found.
+      let contact: any = {};
+      if(!newDoctor.contact?.phone || !/^0[1-9]\d{7,8}$/.test(newDoctor.contact.phone)) {
+        contact.phone = newDoctor.contact?.phone ? "Invalid phone number!" : "Phone is required!"
       }
-      if(!newDoctor.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newDoctor.email)) {
-        newErrors.email = newDoctor.email ? "Invalid email format!" : "Email is required!"
+      if(!newDoctor.contact?.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newDoctor.contact.email)) {
+        contact.email = newDoctor.contact?.email ? "Invalid email format!" : "Email is required!"
       }
+
+      // Handle nested structures like contact.phone and contact.email within validateForm
+      if (Object.keys(contact).length !== 0) {
+        newErrors.contact = contact;
+      }
+
       if (!newDoctor.languages || newDoctor.languages.length === 0) newErrors.languages = "At least one language is required.";
 
+      console.log(newErrors);
       setErrors(newErrors);
+
       return Object.keys(newErrors).length === 0;
     }
 
@@ -98,8 +117,10 @@ const DoctorDetailsTable: React.FC = () => {
         name: "",
         title: "",
         major: "",
-        phone: "",
-        email: "",
+        contact: {
+          phone: "",
+          email: ""
+        },
         languages: [],
         actions: { update: "Update", delete: "Delete" }
       })
@@ -204,16 +225,16 @@ const DoctorDetailsTable: React.FC = () => {
                     <Form.Control
                       type="phone"
                       name="phone"
-                      value={newDoctor.phone}
+                      value={newDoctor.contact?.phone}
                       onChange={handleChange}
                       placeholder="Enter phone"
-                      isInvalid={!!errors.phone}
+                      isInvalid={!!errors?.contact?.phone}
                     />
                     <Form.Text className="text-muted">
                       Must be 9 or 10 digits, starting with 0. E.g., 012345678 or 0123456789
                     </Form.Text>
                     <Form.Control.Feedback type="invalid">
-                        {errors.phone}
+                        {errors?.contact?.phone}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formEmail" className="mb-3">
@@ -221,16 +242,16 @@ const DoctorDetailsTable: React.FC = () => {
                     <Form.Control
                       type="email"
                       name="email"
-                      value={newDoctor.email}
+                      value={newDoctor.contact?.email}
                       onChange={handleChange}
                       placeholder="Enter email"
-                      isInvalid={!!errors.email}
+                      isInvalid={!!errors?.contact?.email}
                     />
                     <Form.Text className="text-muted">
                       E.g., email@example.com
                     </Form.Text>
                     <Form.Control.Feedback type="invalid">
-                        {errors.email}
+                        {errors?.contact?.email}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formLanguages" className="mb-3">
