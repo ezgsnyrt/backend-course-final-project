@@ -112,7 +112,11 @@
             "medicalHistory": [
                 "Asthma",
                 "Allergy to penicillin"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 2,
@@ -124,7 +128,11 @@
             "address": "456 Oak St, Springfield",
             "medicalHistory": [
                 "Hypertension"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 3,
@@ -137,7 +145,11 @@
             "medicalHistory": [
                 "Type 2 Diabetes",
                 "High Cholesterol"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 4,
@@ -149,7 +161,11 @@
             "address": "321 Elm St, Springfield",
             "medicalHistory": [
                 "Migraines"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 5,
@@ -161,7 +177,11 @@
             "address": "654 Cedar St, Springfield",
             "medicalHistory": [
                 "Seasonal Allergies"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 6,
@@ -174,7 +194,11 @@
             "medicalHistory": [
                 "Arthritis",
                 "Vitamin D Deficiency"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 7,
@@ -186,7 +210,11 @@
             "address": "123 Willow St, Springfield",
             "medicalHistory": [
                 "Hypothyroidism"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 8,
@@ -199,7 +227,11 @@
             "medicalHistory": [
                 "Depression",
                 "Anxiety"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 9,
@@ -211,7 +243,11 @@
             "address": "789 Oak St, Springfield",
             "medicalHistory": [
                 "Eczema"
-            ]
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 10,
@@ -221,7 +257,13 @@
             "phone": "902-345-6789",
             "email": "jakegreen@example.com",
             "address": "456 Willow St, Springfield",
-            "medicalHistory": ["Asthma"]
+            "medicalHistory": [
+                "Asthma"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 11,
@@ -231,7 +273,13 @@
             "phone": "903-456-7890",
             "email": "laurablack@example.com",
             "address": "789 Cedar St, Springfield",
-            "medicalHistory": ["High Blood Pressure"]
+            "medicalHistory": [
+                "High Blood Pressure"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 12,
@@ -241,7 +289,14 @@
             "phone": "904-567-8901",
             "email": "martinsilver@example.com",
             "address": "321 Pine St, Springfield",
-            "medicalHistory": ["Seasonal Allergies", "Migraine"]
+            "medicalHistory": [
+                "Seasonal Allergies",
+                "Migraine"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 13,
@@ -251,7 +306,14 @@
             "phone": "905-678-9012",
             "email": "sophiawhite@example.com",
             "address": "654 Oak St, Springfield",
-            "medicalHistory": ["Eczema", "Anxiety"]
+            "medicalHistory": [
+                "Eczema",
+                "Anxiety"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         },
         {
             "id": 14,
@@ -261,7 +323,13 @@
             "phone": "906-789-0123",
             "email": "evanblue@example.com",
             "address": "987 Birch St, Springfield",
-            "medicalHistory": ["Type 1 Diabetes"]
+            "medicalHistory": [
+                "Type 1 Diabetes"
+            ],
+            "actions": {
+                "update": "Update",
+                "delete": "Delete"
+            }
         }
     ]
 }
