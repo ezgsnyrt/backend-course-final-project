@@ -91,16 +91,16 @@ const PatientDetailsTable: React.FC = () => {
         const newErrors: any = {};
         if(!newPatient.name) {
             newErrors.name = "Name is required!"
-        };
+        }
         if(!newPatient.dateOfBirth) {
             newErrors.dateOfBirth = "Date of birth is required!"
-        };
+        }
         if(!newPatient.gender) {
             newErrors.gender = "Gender is required!"
-        };
+        }
         if(!newPatient.address) {
             newErrors.address = "Address is required!"
-        };
+        }
         if(!newPatient.phone || !/^0[1-9]\d{7,8}$/.test(newPatient.phone)) {
             newErrors.phone = newPatient.phone ? "Invalid phone number!" : "Phone is required!"
         }
