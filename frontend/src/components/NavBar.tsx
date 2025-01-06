@@ -32,7 +32,7 @@ const NavBar: React.FC = () => {
                         <Nav.Item>
                             <Nav.Link as={Link} to="/users" className="nav-link">
                                 <FontAwesomeIcon icon={faUsers} className="me-2" />
-                                Users
+                                Patients
                             </Nav.Link>
                         </Nav.Item>
                     </Nav>
