@@ -13,7 +13,7 @@ const PatientDetailsTable: React.FC = () => {
         // Add new patient using form data
         id: patients.length + 1,
         name: "",
-        age: 0,
+        dateOfBirth: "",
         gender: "",
         phone: "",
         email: "",
@@ -26,7 +26,7 @@ const PatientDetailsTable: React.FC = () => {
     const columns = [
         { key: "id", label: "ID" },
         { key: "name", label: "Name" },
-        { key: "age", label: "Age" },
+        { key: "dateOfBirth", label: "Date of Birth" },
         { key: "gender", label: "Gender" },
         { key: "phone", label: "Phone" },
         { key: "email", label: "Email" },
@@ -55,7 +55,7 @@ const PatientDetailsTable: React.FC = () => {
         setNewPatient({
             id: patients.length + 2,
             name: "",
-            age: 0,
+            dateOfBirth: "",
             gender: "",
             phone: "",
             email: "",
@@ -131,23 +131,31 @@ const PatientDetailsTable: React.FC = () => {
                         </Form.Group>
                         <Form.Group controlId="formAge" className="mb-3">
                             <Form.Label>Age</Form.Label>
-                            <Form.Control
-                                type="number"
+                            <Form.Select
                                 name="age"
-                                value={newPatient.age}
-                                onChange={handleChange}
-                                placeholder="Enter age"
-                            />
+                                value={newPatient.dateOfBirth}
+                                onChange={(e) => handleChange(e as any)}
+                            >
+                                <option value="">Select Age</option>
+                                {Array.from({ length: 100 }, (_, i) => i + 1).map((age) => (
+                                    <option key={age} value={age}>
+                                        {age}
+                                    </option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group controlId="formGender" className="mb-3">
                             <Form.Label>Gender</Form.Label>
-                            <Form.Control
-                                type="text"
+                            <Form.Select
                                 name="gender"
                                 value={newPatient.gender}
-                                onChange={handleChange}
-                                placeholder="Enter gender"
-                            />
+                                onChange={(e) => handleChange(e as any)}
+                            >
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group controlId="formPhone" className="mb-3">
                             <Form.Label>Phone</Form.Label>
