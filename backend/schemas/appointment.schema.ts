@@ -1,6 +1,15 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema, Document, Model } from 'mongoose';
 
-const appointmentSchema = new mongoose.Schema(
+export interface IAppointment extends Document {
+    doctorId: mongoose.Types.ObjectId;
+    patientId: mongoose.Types.ObjectId;
+    date: Date;
+    timeSlot: string;
+    complaint: string;
+    status: 'Scheduled' | 'Completed' | 'Cancelled';
+}
+
+const appointmentSchema: Schema<IAppointment> = new mongoose.Schema(
     {
         doctorId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -32,5 +41,5 @@ const appointmentSchema = new mongoose.Schema(
     }
 )
 
-const Appointment = mongoose.model("appointment", appointmentSchema);
-module.exports = Appointment;
+const Appointment: Model<IAppointment> = mongoose.model<IAppointment>('Appointment', appointmentSchema);
+export default Appointment;

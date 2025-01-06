@@ -1,12 +1,22 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema, Document, Model } from 'mongoose';
 
-const patientSchema = new mongoose.Schema(
+export interface IPatient extends Document {
+    name: string;
+    dateOfBirth: string;
+    gender?: 'male' | 'female' | 'other';
+    phone: string;
+    email: string;
+    address: string;
+    medicalHistory: string[];
+}
+
+const patientSchema: Schema<IPatient> = new mongoose.Schema(
     {
         name: {
             type: String,
             required: true
         },
-        dateofBirth: {
+        dateOfBirth: {
             type: String,
             required: true
         },
@@ -34,5 +44,5 @@ const patientSchema = new mongoose.Schema(
     }
 )
 
-const Patient = mongoose.model("patient", patientSchema);
-module.exports = Patient;
+const Patient: Model<IPatient> = mongoose.model<IPatient>('Patient', patientSchema);
+export default Patient;

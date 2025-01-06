@@ -1,6 +1,15 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema, Document, Model } from 'mongoose';
 
-const doctorSchema = new mongoose.Schema(
+export interface IDoctor extends Document {
+    name: string;
+    title: string;
+    major: string;
+    phone: string;
+    email: string;
+    languages: string[];
+}
+
+const doctorSchema: Schema<IDoctor> = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -30,5 +39,5 @@ const doctorSchema = new mongoose.Schema(
     }
 )
 
-const Doctor = mongoose.model("doctor", doctorSchema);
-module.exports = Doctor;
+const Doctor: Model<IDoctor> = mongoose.model<IDoctor>('Doctor', doctorSchema);
+export default Doctor;
