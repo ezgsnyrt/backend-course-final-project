@@ -40,6 +40,17 @@ const PatientDetailsTable: React.FC = () => {
         actions: { update: "Update", delete: "Delete" },
     });
 
+    // Error control
+        const [errors, setErrors] = useState({
+            name: "",
+            dateOfBirth: "",
+            gender: "",
+            phone: "",
+            email: "",
+            address: "",
+            medicalHistory: "",
+        });
+
     // Define table structure which includes columns with keys and a label (column header)
     const columns = [
         { key: "id", label: "ID" },
@@ -68,7 +79,32 @@ const PatientDetailsTable: React.FC = () => {
         }
     };
 
+    // Validate form
+    const validateForm = () => {
+        const newErrors: any = {};
+        if(!newPatient.name) newErrors.name = "Name is required!";
+        if(!newPatient.dateOfBirth) newErrors.dateOfBirth = "Date of birth is required!";
+        if(!newPatient.gender) newErrors.gender = "Gender is required!";
+        if(!newPatient.address) newErrors.address = "Address is required!";
+        if(!newPatient.phone || !/^0[1-9]\d{7,8}$/.test(newPatient.phone)) {
+            newErrors.phone = newPatient.phone ? "Invalid phone number!" : "Phone is required!"
+        }
+        if(!newPatient.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newPatient.email)) {
+            newErrors.email = newPatient.email ? "Invalid email format!" : "Email is required!"
+        }
+        if (!newPatient.medicalHistory || newPatient.medicalHistory.length === 0) newErrors.medicalHistory = "At least one medical background information is required.";
+
+        console.log(newErrors);
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    }
+
     const handleSubmit = () => {
+        if(!validateForm()) {
+            return;
+        }
+
         setPatients([...patients, { ...newPatient, id: patients.length + 1 }]);
         setNewPatient({
             id: patients.length + 2,
@@ -147,7 +183,11 @@ const PatientDetailsTable: React.FC = () => {
                                 value={newPatient.name}
                                 onChange={handleChange}
                                 placeholder="Enter full name"
+                                isInvalid={!!errors.name}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.name}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group controlId="formAge" className="mb-3">
                             <Form.Label>Date of Birth</Form.Label>
@@ -156,7 +196,12 @@ const PatientDetailsTable: React.FC = () => {
                                 name="dateOfBirth"
                                 value={newPatient.dateOfBirth}
                                 onChange={handleChange}
+                                placeholder="Enter date of birth"
+                                isInvalid={!!errors.dateOfBirth}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.dateOfBirth}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group controlId="formGender" className="mb-3">
                             <Form.Label>Gender</Form.Label>
@@ -164,12 +209,16 @@ const PatientDetailsTable: React.FC = () => {
                                 name="gender"
                                 value={newPatient.gender}
                                 onChange={(e) => handleChange(e as any)}
+                                isInvalid={!!errors.gender}
                             >
                                 <option value="">Select Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
                             </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.gender}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group controlId="formPhone" className="mb-3">
                             <Form.Label>Phone</Form.Label>
@@ -179,7 +228,11 @@ const PatientDetailsTable: React.FC = () => {
                                 value={newPatient.phone}
                                 onChange={handleChange}
                                 placeholder="Enter phone number"
+                                isInvalid={!!errors.phone}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.phone}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group controlId="formEmail" className="mb-3">
                             <Form.Label>Email</Form.Label>
@@ -189,7 +242,11 @@ const PatientDetailsTable: React.FC = () => {
                                 value={newPatient.email}
                                 onChange={handleChange}
                                 placeholder="Enter email"
+                                isInvalid={!!errors.email}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.email}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group controlId="formAddress" className="mb-3">
                             <Form.Label>Address</Form.Label>
@@ -199,7 +256,11 @@ const PatientDetailsTable: React.FC = () => {
                                 value={newPatient.address}
                                 onChange={handleChange}
                                 placeholder="Enter address"
+                                isInvalid={!!errors.address}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.address}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group
                             controlId="formMedicalHistory"
@@ -212,7 +273,11 @@ const PatientDetailsTable: React.FC = () => {
                                 value={newPatient.medicalHistory.join(", ")}
                                 onChange={handleChange}
                                 placeholder="Provide health background"
+                                isInvalid={!!errors.medicalHistory}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.medicalHistory}
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
