@@ -57,7 +57,13 @@ const DoctorDetailsTable: React.FC = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       console.log(errors);
-      // setErrors({ ...errors, [name]: "" }) // Clear error for the field being edited
+
+      // Clear previous error message if the input field is being filled
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "", // Clear only the error for the specific input field
+      }));
+
       if (name === "languages") {
         setNewDoctor({
           ...newDoctor,
@@ -71,16 +77,24 @@ const DoctorDetailsTable: React.FC = () => {
     // Validate form
     const validateForm = () => {
       const newErrors: any = {};
-      if(!newDoctor.name) newErrors.name = "Name is required!";
-      if(!newDoctor.title) newErrors.title = "Title is required!";
-      if(!newDoctor.major) newErrors.major = "Major is required!";
+      if(!newDoctor.name) {
+        newErrors.name = "Name is required!"
+      }
+      if(!newDoctor.title) {
+        newErrors.title = "Title is required!"
+      }
+      if(!newDoctor.major) {
+        newErrors.major = "Major is required!"
+      }
       if(!newDoctor.phone || !/^0[1-9]\d{7,8}$/.test(newDoctor.phone)) {
         newErrors.phone = newDoctor.phone ? "Invalid phone number!" : "Phone is required!"
       }
       if(!newDoctor.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newDoctor.email)) {
         newErrors.email = newDoctor.email ? "Invalid email format!" : "Email is required!"
       }
-      if (!newDoctor.languages || newDoctor.languages.length === 0) newErrors.languages = "At least one language is required.";
+      if (!newDoctor.languages || newDoctor.languages.length === 0) {
+        newErrors.languages = "At least one language is required."
+      }
 
       console.log(newErrors);
       setErrors(newErrors);
