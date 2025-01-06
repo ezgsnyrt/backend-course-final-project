@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import data from "../config/config.json";
 import { Patient } from "./Types/patient.interface";
-
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
 const PatientDetailsTable: React.FC = () => {
     const [patients, setPatients] = useState<Patient[]>(data.patients);
-    const [newPatient, setNewPatient] = useState<Patient>({ // Add new patient using form data
+    const [newPatient, setNewPatient] = useState<Patient>({
+        // Add new patient using form data
         id: patients.length + 1,
         name: "",
         age: 0,
@@ -30,10 +32,47 @@ const PatientDetailsTable: React.FC = () => {
         { key: "actions", label: "Actions" },
     ];
 
+    return (
+        <div className="patient-details-table">
+            <Button variant="primary" className="mb-3">
+                Add New
+            </Button>
 
-  return (
-    <div>PatientDetailsTable</div>
-  )
-}
+            <Table responsive bordered hover className="text-center">
+                <thead>
+                    <tr>
+                        {columns.map((col) => (
+                            <th key={col.key}>{col.label}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {patients.map((patient, index) => (
+                        <tr key={index}>
+                            {columns.map((col) => (
+                                <td key={col.key}>
+                                    {col.key === "actions" ? (
+                                        <>
+                                            <Button variant="warning" size="sm" className="me-2">
+                                                {patient.actions.update}
+                                            </Button>
+                                            <Button variant="danger" size="sm">
+                                                {patient.actions.delete}
+                                            </Button>
+                                        </>
+                                    ) : col.key === "medicalHistory" ? (
+                                        patient.medicalHistory.join(", ")
+                                    ) : (
+                                        (patient as any)[col.key]
+                                    )}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+        </div>
+    );
+};
 
 export default PatientDetailsTable;
