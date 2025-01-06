@@ -6,6 +6,24 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
+// Convert date of birth to age
+const calculateAge = (dateOfBirth: string): number | string => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+
+    if (birthDate > today) {
+        // For unexpected birth year
+        return "Invalid Date";
+    }
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+};
+
 const PatientDetailsTable: React.FC = () => {
     const [patients, setPatients] = useState<Patient[]>(data.patients);
     const [showModal, setShowModal] = useState(false);
@@ -26,7 +44,7 @@ const PatientDetailsTable: React.FC = () => {
     const columns = [
         { key: "id", label: "ID" },
         { key: "name", label: "Name" },
-        { key: "dateOfBirth", label: "Date of Birth" },
+        { key: "age", label: "Age" },
         { key: "gender", label: "Gender" },
         { key: "phone", label: "Phone" },
         { key: "email", label: "Email" },
@@ -104,6 +122,8 @@ const PatientDetailsTable: React.FC = () => {
                                         </>
                                     ) : col.key === "medicalHistory" ? (
                                         patient.medicalHistory.join(", ")
+                                    ) : col.key === "age" ? (
+                                        calculateAge(patient.dateOfBirth)
                                     ) : (
                                         (patient as any)[col.key]
                                     )}
@@ -130,19 +150,13 @@ const PatientDetailsTable: React.FC = () => {
                             />
                         </Form.Group>
                         <Form.Group controlId="formAge" className="mb-3">
-                            <Form.Label>Age</Form.Label>
-                            <Form.Select
-                                name="age"
+                            <Form.Label>Date of Birth</Form.Label>
+                            <Form.Control
+                                type="date"
+                                name="dateOfBirth"
                                 value={newPatient.dateOfBirth}
-                                onChange={(e) => handleChange(e as any)}
-                            >
-                                <option value="">Select Age</option>
-                                {Array.from({ length: 100 }, (_, i) => i + 1).map((age) => (
-                                    <option key={age} value={age}>
-                                        {age}
-                                    </option>
-                                ))}
-                            </Form.Select>
+                                onChange={handleChange}
+                            />
                         </Form.Group>
                         <Form.Group controlId="formGender" className="mb-3">
                             <Form.Label>Gender</Form.Label>
