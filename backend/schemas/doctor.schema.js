@@ -26,16 +26,6 @@ const doctorSchema = new mongoose.Schema(
             type: [String],
             required: true,
             default: [],
-        },
-        actions: {
-            update: {
-                type: String,
-                default: "Update"
-            },
-            delete: {
-                type: String,
-                default: "Delete"
-            }
         }
     }
 )

@@ -28,17 +28,8 @@ const patientSchema = new mongoose.Schema(
         },
         medicalHistory: {
             type: [String],
-            required: true
-        },
-        actions: {
-            update: {
-                type: String,
-                default: "Update"
-            },
-            delete: {
-                type: String,
-                default: "Delete"
-            }
+            required: true,
+            default: []
         }
     }
 )
