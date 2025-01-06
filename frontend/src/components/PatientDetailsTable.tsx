@@ -3,9 +3,12 @@ import data from "../config/config.json";
 import { Patient } from "./Types/patient.interface";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
 const PatientDetailsTable: React.FC = () => {
     const [patients, setPatients] = useState<Patient[]>(data.patients);
+    const [showModal, setShowModal] = useState(false);
     const [newPatient, setNewPatient] = useState<Patient>({
         // Add new patient using form data
         id: patients.length + 1,
@@ -32,9 +35,44 @@ const PatientDetailsTable: React.FC = () => {
         { key: "actions", label: "Actions" },
     ];
 
+    const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        if (name === "medicalHistory") {
+            setNewPatient({
+                ...newPatient,
+                medicalHistory: value.split(",").map((item) => item.trim()),
+            });
+        } else {
+            setNewPatient({ ...newPatient, [name]: value });
+        }
+    };
+
+    const handleSubmit = () => {
+        setPatients([...patients, { ...newPatient, id: patients.length + 1 }]);
+        setNewPatient({
+            id: patients.length + 2,
+            name: "",
+            age: 0,
+            gender: "",
+            phone: "",
+            email: "",
+            address: "",
+            medicalHistory: [],
+            actions: { update: "Update", delete: "Delete" },
+        });
+        handleCloseModal();
+    };
+
     return (
         <div className="patient-details-table">
-            <Button variant="primary" className="mb-3">
+            <Button
+                variant="primary"
+                onClick={handleShowModal}
+                className="mb-3"
+            >
                 Add New
             </Button>
 
@@ -53,7 +91,11 @@ const PatientDetailsTable: React.FC = () => {
                                 <td key={col.key}>
                                     {col.key === "actions" ? (
                                         <>
-                                            <Button variant="warning" size="sm" className="me-2">
+                                            <Button
+                                                variant="warning"
+                                                size="sm"
+                                                className="me-2"
+                                            >
                                                 {patient.actions.update}
                                             </Button>
                                             <Button variant="danger" size="sm">
@@ -71,6 +113,96 @@ const PatientDetailsTable: React.FC = () => {
                     ))}
                 </tbody>
             </Table>
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add New Patient</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formName" className="mb-3">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="name"
+                                value={newPatient.name}
+                                onChange={handleChange}
+                                placeholder="Enter full name"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formAge" className="mb-3">
+                            <Form.Label>Age</Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="age"
+                                value={newPatient.age}
+                                onChange={handleChange}
+                                placeholder="Enter age"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formGender" className="mb-3">
+                            <Form.Label>Gender</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="gender"
+                                value={newPatient.gender}
+                                onChange={handleChange}
+                                placeholder="Enter gender"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formPhone" className="mb-3">
+                            <Form.Label>Phone</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="phone"
+                                value={newPatient.phone}
+                                onChange={handleChange}
+                                placeholder="Enter phone number"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formEmail" className="mb-3">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value={newPatient.email}
+                                onChange={handleChange}
+                                placeholder="Enter email"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formAddress" className="mb-3">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="address"
+                                value={newPatient.address}
+                                onChange={handleChange}
+                                placeholder="Enter address"
+                            />
+                        </Form.Group>
+                        <Form.Group
+                            controlId="formMedicalHistory"
+                            className="mb-3"
+                        >
+                            <Form.Label>Medical History</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="medicalHistory"
+                                value={newPatient.medicalHistory.join(", ")}
+                                onChange={handleChange}
+                                placeholder="Provide health background"
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Submit
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };
