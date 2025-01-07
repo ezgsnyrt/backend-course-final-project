@@ -26,3 +26,25 @@ AppointmentsRouter.post("/", async (req: Request, res: Response) => {
         res.status(400).json({ error: (err as Error).message });
     }
 });
+
+AppointmentsRouter.put("/:id", async (req: Request<{ id: string }>, res: Response) => {
+    try {
+        const { id } = req.params;
+        const updatedAppointment = await Appointment.findByIdAndUpdate(
+            id,
+            req.body,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedAppointment) {
+            res.status(404).json({ error: "Appointment not found." });
+        }
+
+        res.json({
+            message: "Appointment updated successfully!",
+            updatedAppointment
+        });
+    } catch (err) {
+        res.status(500).json({ error: (err as Error).message });
+    }
+});
