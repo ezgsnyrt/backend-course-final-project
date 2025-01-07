@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectToDB } from './database/db';
 import { DoctorsRouter } from './routes/doctors.routes';
 import { PatientsRouter } from './routes/patients.routes';
+import { AppointmentsRouter } from './routes/appointments.routes';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/doctors', DoctorsRouter);
 app.use('/patients', PatientsRouter);
+app.use('/appointments', AppointmentsRouter);
 
 
 app.listen(PORT, () => {
