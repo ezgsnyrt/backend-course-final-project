@@ -16,8 +16,8 @@ const DoctorDropdown: React.FC<DropdownProps> = ({ doctors }) => {
             <Dropdown.Menu>
                 {doctors.map((doctor) => (
                     <Dropdown.Item
-                        key={doctor.id}
-                        href={`#doctor-${doctor.id}`}
+                        key={doctor._id}
+                        href={`#doctor-${doctor._id}`}
                     >
                         {doctor.name}
                     </Dropdown.Item>
