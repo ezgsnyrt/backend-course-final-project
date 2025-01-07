@@ -40,7 +40,6 @@ const PatientDetailsTable: React.FC = () => {
         email: "",
         address: "",
         medicalHistory: "",
-        actions: { update: "Update", delete: "Delete" },
     });
 
     // Error control
@@ -93,9 +92,7 @@ const PatientDetailsTable: React.FC = () => {
             [name]: "", // Clear only the error for the specific input field
         }));
 
-        if (name === "medicalHistory") {
-            setNewPatient({ ...newPatient, [name]: value });
-        }
+        setNewPatient({ ...newPatient, [name]: value });
     };
 
     // Validate form
@@ -203,7 +200,6 @@ const PatientDetailsTable: React.FC = () => {
         email: "",
         address: "",
         medicalHistory: "",
-        actions: { update: "Update", delete: "Delete" },
     });
 
 

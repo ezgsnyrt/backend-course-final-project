@@ -7,5 +7,4 @@ export interface Patient {
     email: string;
     address: string;
     medicalHistory: string;
-    actions: { update: string; delete: string };
 }
