@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 export const DoctorsRouter = express.Router();
 
-DoctorsRouter.get("/doctors", async (req: Request, res: Response) => {
+DoctorsRouter.get("/", async (req: Request, res: Response) => {
     try {
         const doctors = await Doctor.find();
         console.log(`[GET/doctors] Retrieved ${doctors.length} doctors.`);
@@ -15,7 +15,7 @@ DoctorsRouter.get("/doctors", async (req: Request, res: Response) => {
     }
 });
 
-DoctorsRouter.post("/doctors", async (req: Request, res: Response) => {
+DoctorsRouter.post("/", async (req: Request, res: Response) => {
     try {
         const newDoctor = new Doctor(req.body);
         await newDoctor.save();
@@ -27,7 +27,7 @@ DoctorsRouter.post("/doctors", async (req: Request, res: Response) => {
     }
 });
 
-DoctorsRouter.put("/doctors/:id", async (req: Request<{id:string}>, res: Response) => {
+DoctorsRouter.put("/:id", async (req: Request<{id:string}>, res: Response) => {
     try {
         const id = req.params.id;
         const updatedDoctor = await Doctor.findByIdAndUpdate(id, req.body);
@@ -48,7 +48,7 @@ DoctorsRouter.put("/doctors/:id", async (req: Request<{id:string}>, res: Respons
     }
 });
 
-DoctorsRouter.put("/doctors/:id", async (req: Request<{id:string}>, res: Response) => {
+DoctorsRouter.delete("/:id", async (req: Request<{id:string}>, res: Response) => {
     try {
         const { id } = req.params;
         const deletedDoctor = await Doctor.findByIdAndDelete(id);
