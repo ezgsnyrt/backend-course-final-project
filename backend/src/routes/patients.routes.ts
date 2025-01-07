@@ -26,3 +26,24 @@ PatientsRouter.post("/", async (req: Request, res: Response) => {
         res.status(400).json({ error: (err as Error).message });
     }
 });
+
+PatientsRouter.put("/:id", async (req: Request<{id:string}>, res: Response) => {
+    try {
+        const id = req.params.id;
+        const updatedPatient = await Patient.findByIdAndUpdate(id, req.body);
+
+        if (!updatedPatient) {
+            console.warn(`[PUT/patients/${id}] Patient not found.`);
+            res.status(404).json({ error: "Patient cannot be found!" });
+        }
+
+        console.log(`[PUT/patients/${id}] Patient updated successfully.`);
+        res.json({
+            message: "Patient has been updated successfully!",
+            updatedPatient,
+        });
+    } catch (err) {
+        console.error(`[PUT/patients/${req.params.id}] Error: ${(err as Error).message}`);
+        res.status(500).json({ error: (err as Error).message });
+    }
+});
