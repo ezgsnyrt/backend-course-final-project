@@ -5,7 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-require("dotenv/config");
+const dotenv_1 = __importDefault(require("dotenv"));
+const db_1 = require("./database/db");
+dotenv_1.default.config();
+(0, db_1.connectToDB)();
 const PORT = 3000;
 const app = (0, express_1.default)();
 const options = {

@@ -1,6 +1,12 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import 'dotenv/config';
+import dotenv from "dotenv";
+import { connectToDB } from './database/db';
+import { DoctorsRouter } from './routes/doctors.routes';
+
+dotenv.config();
+
+connectToDB();
 
 const PORT: number = 3000;
 const app: Application = express();
@@ -14,6 +20,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
+
+app.use('/', DoctorsRouter);
 
 
 app.listen(PORT, () => {
