@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import data from "../config/config.json";
+import React, { useState, useEffect } from "react";
+// import data from "../config/config.json";
 import { Patient } from "./Types/patient.interface";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import axios from "axios";
+
+const API_BASE_URL = "http://localhost:3000";
 
 // Convert date of birth to age
 const calculateAge = (dateOfBirth: string): number | string => {
@@ -25,11 +28,11 @@ const calculateAge = (dateOfBirth: string): number | string => {
 };
 
 const PatientDetailsTable: React.FC = () => {
-    const [patients, setPatients] = useState<Patient[]>(data.patients);
+    const [patients, setPatients] = useState<Patient[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [newPatient, setNewPatient] = useState<Patient>({
         // Add new patient using form data
-        id: patients.length + 1,
+        _id: "",
         name: "",
         dateOfBirth: "",
         gender: "",
@@ -53,7 +56,7 @@ const PatientDetailsTable: React.FC = () => {
 
     // Define table structure which includes columns with keys and a label (column header)
     const columns = [
-        { key: "id", label: "ID" },
+        // { key: "id", label: "ID" },
         { key: "name", label: "Name" },
         { key: "age", label: "Age" },
         { key: "gender", label: "Gender" },
@@ -63,6 +66,21 @@ const PatientDetailsTable: React.FC = () => {
         { key: "medicalHistory", label: "Medical History" },
         { key: "actions", label: "Actions" },
     ];
+
+    const fetchPatients = async () => {
+        try {
+            const response = await axios.get(API_BASE_URL + "/patients");
+            console.log("Patients fetched successfully:", response.data);
+            setPatients(response.data);
+        } catch (error) {
+            console.error("Error fetching patients:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPatients();
+    }, []);
+
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
@@ -115,24 +133,44 @@ const PatientDetailsTable: React.FC = () => {
         return Object.keys(newErrors).length === 0;
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if(!validateForm()) {
+            console.log("Form validation failed.");
             return;
         }
 
-        setPatients([...patients, { ...newPatient, id: patients.length + 1 }]);
-        setNewPatient({
-            id: patients.length + 2,
-            name: "",
-            dateOfBirth: "",
-            gender: "",
-            phone: "",
-            email: "",
-            address: "",
-            medicalHistory: [],
-            actions: { update: "Update", delete: "Delete" },
-        });
-        handleCloseModal();
+        try {
+            console.log("Submitting new patient:", newPatient);
+            const response = await axios.post((API_BASE_URL + "/patients"), newPatient);
+            console.log("Patient added successfully:", response.data);
+            setPatients([...patients, response.data]);
+            handleCloseModal();
+        } catch (error) {
+            console.error("Error adding patient:", error);
+        }
+    };
+
+    const handleDelete = async (id?: string) => {
+        if (!id) {
+            console.error("Error: ID is undefined");
+            return;
+        }
+
+        try {
+            console.log(`Deleting patient with ID: ${id}`);
+            const response = await axios.delete(`${API_BASE_URL}/patients/${id}`); // Send delete req to backend
+            console.log("Delete response:", response);
+
+            setPatients((prevPatients) => {
+                const updatedPatients = prevPatients.filter((patient) => patient._id && patient._id !== id);
+                console.log("Remaining patients:", updatedPatients);
+                return updatedPatients;
+            });
+
+            console.log("Patient deleted successfully. Remaining patients:", patients);
+        } catch (error) {
+            console.error("Error deleting patient:", error);
+        }
     };
 
     return (
@@ -154,8 +192,8 @@ const PatientDetailsTable: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {patients.map((patient, index) => (
-                        <tr key={index}>
+                    {patients.map((patient) => (
+                        <tr key={patient._id}>
                             {columns.map((col) => (
                                 <td key={col.key}>
                                     {col.key === "actions" ? (
@@ -164,11 +202,16 @@ const PatientDetailsTable: React.FC = () => {
                                                 variant="warning"
                                                 size="sm"
                                                 className="me-2"
+                                                onClick={() => alert(`Updating patient: ${patient.name}`)}
                                             >
-                                                {patient.actions.update}
+                                                Update
                                             </Button>
-                                            <Button variant="danger" size="sm">
-                                                {patient.actions.delete}
+                                            <Button
+                                                variant="danger"
+                                                size="sm"
+                                                onClick={() => patient._id ? handleDelete(patient._id) : console.error("ID not found")}
+                                                >
+                                                Delete
                                             </Button>
                                         </>
                                     ) : col.key === "medicalHistory" ? (
