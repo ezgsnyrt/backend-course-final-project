@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from "dotenv";
 import { connectToDB } from './database/db';
 import { DoctorsRouter } from './routes/doctors.routes';
+import { PatientsRouter } from './routes/patients.routes';
 
 dotenv.config();
 
@@ -21,7 +22,8 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-app.use('/', DoctorsRouter);
+app.use('/doctors', DoctorsRouter);
+app.use('/patients', PatientsRouter);
 
 
 app.listen(PORT, () => {
