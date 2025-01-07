@@ -39,7 +39,7 @@ const PatientDetailsTable: React.FC = () => {
         phone: "",
         email: "",
         address: "",
-        medicalHistory: [],
+        medicalHistory: "",
         actions: { update: "Update", delete: "Delete" },
     });
 
@@ -81,7 +81,6 @@ const PatientDetailsTable: React.FC = () => {
         fetchPatients();
     }, []);
 
-
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
@@ -95,11 +94,6 @@ const PatientDetailsTable: React.FC = () => {
         }));
 
         if (name === "medicalHistory") {
-            setNewPatient({
-                ...newPatient,
-                medicalHistory: value.split(",").map((item) => item.trim()),
-            });
-        } else {
             setNewPatient({ ...newPatient, [name]: value });
         }
     };
@@ -139,14 +133,40 @@ const PatientDetailsTable: React.FC = () => {
             return;
         }
 
-        try {
-            console.log("Submitting new patient:", newPatient);
-            const response = await axios.post((API_BASE_URL + "/patients"), newPatient);
-            console.log("Patient added successfully:", response.data);
-            setPatients([...patients, response.data]);
-            handleCloseModal();
-        } catch (error) {
-            console.error("Error adding patient:", error);
+        console.log(newPatient);
+
+        if (!newPatient._id) {
+            try {
+                console.log("Submitting new patient:", newPatient);
+                delete newPatient['_id'];
+                const response = await axios.post((API_BASE_URL + "/patients"), newPatient);
+                console.log("Patient added successfully:", response.data);
+                setPatients([...patients, response.data]);
+                resetNewPatient();
+                handleCloseModal();
+            } catch (error) {
+                console.error("Error adding patient:", error);
+            }
+        }
+        else {
+            try {
+                console.log(`Updating patient with ID: ${newPatient._id}`);
+                const response = await axios.put(`${API_BASE_URL}/patients/${newPatient._id}`, newPatient); // Send put req to backend
+                console.log("Update response:", response);
+
+                setPatients((prevPatients) =>
+                    prevPatients.map((patient) =>
+                        patient._id === newPatient._id
+                            ? { ...patient, ...newPatient }  // Eski hasta verisini güncellenenle değiştir
+                            : patient
+                    )
+                );
+                resetNewPatient();
+                handleCloseModal();
+                console.log("Patient updated successfully");
+            } catch (error) {
+                console.error("Error updating patient:", error);
+            }
         }
     };
 
@@ -172,6 +192,20 @@ const PatientDetailsTable: React.FC = () => {
             console.error("Error deleting patient:", error);
         }
     };
+
+    const resetNewPatient = () => setNewPatient({
+        // Add new patient using form data
+        _id: "",
+        name: "",
+        dateOfBirth: "",
+        gender: "",
+        phone: "",
+        email: "",
+        address: "",
+        medicalHistory: "",
+        actions: { update: "Update", delete: "Delete" },
+    });
+
 
     return (
         <div className="patient-details-table">
@@ -202,7 +236,11 @@ const PatientDetailsTable: React.FC = () => {
                                                 variant="warning"
                                                 size="sm"
                                                 className="me-2"
-                                                onClick={() => alert(`Updating patient: ${patient.name}`)}
+                                                // onClick={() => alert(`Updating patient: ${patient.name}`)}
+                                                onClick={() => {
+                                                    setNewPatient(patient);
+                                                    setShowModal(true);
+                                                }}
                                             >
                                                 Update
                                             </Button>
@@ -214,8 +252,6 @@ const PatientDetailsTable: React.FC = () => {
                                                 Delete
                                             </Button>
                                         </>
-                                    ) : col.key === "medicalHistory" ? (
-                                        patient.medicalHistory.join(", ")
                                     ) : col.key === "age" ? (
                                         calculateAge(patient.dateOfBirth)
                                     ) : (
@@ -328,7 +364,7 @@ const PatientDetailsTable: React.FC = () => {
                             <Form.Control
                                 type="text"
                                 name="medicalHistory"
-                                value={newPatient.medicalHistory.join(", ")}
+                                value={newPatient.medicalHistory}
                                 onChange={handleChange}
                                 placeholder="Provide health background"
                                 isInvalid={!!errors.medicalHistory}
