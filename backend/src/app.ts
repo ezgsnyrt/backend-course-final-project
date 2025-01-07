@@ -13,7 +13,7 @@ connectToDB();
 const PORT: number = 3000;
 const app: Application = express();
 const options: cors.CorsOptions = {
-  //origin: ['http://localhost:3001'], // Local host for frontend
+  origin: ['http://localhost:3001'], // Local host for frontend
 };
 
 app.use(cors(options));
