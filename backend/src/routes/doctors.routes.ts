@@ -30,7 +30,6 @@ DoctorsRouter.post("/doctors", async (req: Request, res: Response) => {
 DoctorsRouter.put("/doctors/:id", async (req: Request<{id:string}>, res: Response) => {
     try {
         const id = req.params.id;
-        // const asd = new mongoose.Types.ObjectId(id);
         const updatedDoctor = await Doctor.findByIdAndUpdate(id, req.body);
 
         if (!updatedDoctor) {
@@ -45,6 +44,27 @@ DoctorsRouter.put("/doctors/:id", async (req: Request<{id:string}>, res: Respons
         });
     } catch (err) {
         console.error(`[PUT/doctors/${req.params.id}] Error: ${(err as Error).message}`);
+        res.status(500).json({ error: (err as Error).message });
+    }
+});
+
+DoctorsRouter.put("/doctors/:id", async (req: Request<{id:string}>, res: Response) => {
+    try {
+        const { id } = req.params;
+        const deletedDoctor = await Doctor.findByIdAndDelete(id);
+
+        if (!deletedDoctor) {
+            console.warn(`[DELETE/doctors/${id}] Doctor not found.`);
+            res.status(404).json({ error: "Doctor cannot be found!" });
+        }
+
+        console.log(`[DELETE/doctors/${id}] Doctor deleted successfully.`);
+        res.json({
+            message: "Doctor has been deleted successfully!",
+            deletedDoctor,
+        });
+    } catch (err) {
+        console.error(`[DELETE/doctors/${req.params.id}] Error: ${(err as Error).message}`);
         res.status(500).json({ error: (err as Error).message });
     }
 });
