@@ -48,3 +48,21 @@ AppointmentsRouter.put("/:id", async (req: Request<{ id: string }>, res: Respons
         res.status(500).json({ error: (err as Error).message });
     }
 });
+
+AppointmentsRouter.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
+    try {
+        const { id } = req.params;
+        const deletedAppointment = await Appointment.findByIdAndDelete(id);
+
+        if (!deletedAppointment) {
+            res.status(404).json({ error: "Appointment not found." });
+        }
+
+        res.json({
+            message: "Appointment deleted successfully!",
+            deletedAppointment
+        });
+    } catch (err) {
+        res.status(500).json({ error: (err as Error).message });
+    }
+});
