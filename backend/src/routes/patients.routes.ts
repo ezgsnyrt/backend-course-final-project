@@ -47,3 +47,24 @@ PatientsRouter.put("/:id", async (req: Request<{id:string}>, res: Response) => {
         res.status(500).json({ error: (err as Error).message });
     }
 });
+
+PatientsRouter.delete("/:id", async (req: Request<{id:string}>, res: Response) => {
+    try {
+        const { id } = req.params;
+        const deletedPatient = await Patient.findByIdAndDelete(id);
+
+        if (!deletedPatient) {
+            console.warn(`[DELETE/patients/${id}] Patient not found.`);
+            res.status(404).json({ error: "Patient cannot be found!" });
+        }
+
+        console.log(`[DELETE/patients/${id}] Patient deleted successfully.`);
+        res.json({
+            message: "Patient has been deleted successfully!",
+            deletedPatient,
+        });
+    } catch (err) {
+        console.error(`[DELETE/patients/${req.params.id}] Error: ${(err as Error).message}`);
+        res.status(500).json({ error: (err as Error).message });
+    }
+});
