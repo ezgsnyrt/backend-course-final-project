@@ -13,3 +13,16 @@ AppointmentsRouter.get("/", async (req: Request, res: Response) => {
         console.error(`[GET/appointments] Error: ${(err as Error).message}`);
         res.status(500).json({ error: (err as Error).message });    }
 });
+
+AppointmentsRouter.post("/", async (req: Request, res: Response) => {
+    try {
+        const newAppointment = new Appointment(req.body);
+        await newAppointment.save();
+        res.status(201).json({
+            message: "Appointment created successfully!",
+            appointment: newAppointment
+        });
+    } catch (err) {
+        res.status(400).json({ error: (err as Error).message });
+    }
+});
