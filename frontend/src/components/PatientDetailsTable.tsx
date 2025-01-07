@@ -154,7 +154,7 @@ const PatientDetailsTable: React.FC = () => {
                 setPatients((prevPatients) =>
                     prevPatients.map((patient) =>
                         patient._id === newPatient._id
-                            ? { ...patient, ...newPatient }  // Eski hasta verisini güncellenenle değiştir
+                            ? { ...patient, ...newPatient }
                             : patient
                     )
                 );
@@ -191,7 +191,6 @@ const PatientDetailsTable: React.FC = () => {
     };
 
     const resetNewPatient = () => setNewPatient({
-        // Add new patient using form data
         _id: "",
         name: "",
         dateOfBirth: "",
