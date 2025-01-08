@@ -28,7 +28,7 @@ const appointmentSchema: Schema<IAppointment> = new mongoose.Schema(
         },
         date: {
             type: Date,
-            required: true
+            required: false
         },
         timeSlot: {
             type: String,
@@ -36,7 +36,7 @@ const appointmentSchema: Schema<IAppointment> = new mongoose.Schema(
         },
         complaint: {
             type: String,
-            required: true
+            required: false
         },
         status: {
             type: String,
