@@ -1,4 +1,4 @@
-table {
+.appointment-table {
     width: 100%;
     border-collapse: collapse;
     font-size: fonts.$font-size-sm;
@@ -37,12 +37,6 @@ table {
             text-align: center;
             padding: 0.5rem;
         }
-
-        // thead th {
-        //     position: sticky;
-        //     top: 0;
-        //     z-index: 1;
-        // }
     }
 
     @media (max-width: 480px) {
@@ -55,9 +49,9 @@ table {
     }
 }
 
-// Button styles
 .button-delete,
-.button-create {
+.button-create,
+.button-update {
     font-size: fonts.$font-size-xs;
     color: colors.$primary-color;
     border: none;
@@ -80,5 +74,14 @@ table {
 
     &:hover {
         background-color: colors.$hover-color6;
+    }
+}
+
+.button-update {
+    background-color: colors.$bg-color6;
+    margin-top: 0.3rem;
+
+    &:hover {
+        background-color: colors.$hover-color5;
     }
 }
