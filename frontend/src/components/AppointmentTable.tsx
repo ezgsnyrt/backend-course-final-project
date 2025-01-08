@@ -139,11 +139,50 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
             </Table>
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create New Appointment</Modal.Title>
+                    <Modal.Title>Appointment Form</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group>
+                        <Form.Group controlId="formName" className="mb-3">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="name"
+                                value=""
+                                placeholder="Enter patient's full name"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formPhone" className="mb-3">
+                            <Form.Label>Phone</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="phone"
+                                value=""
+                                placeholder="Enter patient's phone number"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formEmail" className="mb-3">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value=""
+                                placeholder="Enter patient's email"
+                            />
+                        </Form.Group>
+                        <Form.Group
+                            controlId="formMedicalHistory"
+                            className="mb-3"
+                        >
+                            <Form.Label>Medical History</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="medicalHistory"
+                                value=""
+                                placeholder="Provide patient's medical history"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formName" className="mb-3">
                             <Form.Label>Select Doctor</Form.Label>
                             <Form.Control
                                 as="select"
