@@ -199,31 +199,6 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                                 ))}
                             </Form.Select>
                         </Form.Group>
-                        <Form.Group controlId="formDay" className="mb-3">
-                            <Form.Label>Select a Day</Form.Label>
-                            <Form.Control
-                                type="date"
-                                value={selectedDay}
-                                onChange={(e) => setSelectedDay(e.target.value)}
-                            >
-                            </Form.Control>
-                        </Form.Group>
-
-                        <Form.Group controlId="formTimeSlot" className="mb-3">
-                            <Form.Label>Select a Time Slot</Form.Label>
-                            <Form.Control
-                                as="select"
-                                value={selectedTimeSlot}
-                                onChange={(e) => setSelectedTimeSlot(e.target.value)}
-                            >
-                                <option value="">Select a Time Slot...</option>
-                                {timeSlots.map((timeSlot, index) => (
-                                    <option key={index} value={timeSlot}>
-                                        {timeSlot}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
