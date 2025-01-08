@@ -5,92 +5,87 @@ import { faCalendarCheck, faPenToSquare, faTrash } from "@fortawesome/free-solid
 import { Table, Modal, Button, Form } from "react-bootstrap";
 import { Doctor } from "./Types/doctorDropdown.interface";
 import { Patient } from "./Types/patient.interface";
+import axios from "axios";
+import { Appointment } from "./Types/appointment.interface";
+
+const API_URL = "http://localhost:3000";
+const timeSlots = [
+    "08:00-08:30",
+    "08:30-09:00",
+    "09:00-09:30",
+    "09:30-10:00",
+    "10:00-10:30",
+    "10:30-11:00",
+    "11:00-11:30",
+    "11:30-12:00",
+    "12:00-12:30",
+    "12:30-13:00",
+    "13:00-13:30",
+    "13:30-14:00",
+    "14:00-14:30",
+    "14:30-15:00",
+    "15:00-15:30",
+    "15:30-16:00",
+    "16:00-16:30",
+    "16:30-17:00",
+    "17:00-17:30",
+    "17:30-18:00",
+];
+
+const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+];
 
 const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = ({ patients, doctors }) => {
     const [showModal, setShowModal] = useState(false);
-    const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
-    const [selectedDay, setSelectedDay] = useState("");
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+    const [selectedDay, setSelectedDay] = useState<string | null>(null);
     const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
-    const [newPatient, setNewPatient] = useState<Patient>({
-        _id: "",
-        name: "",
-        dateOfBirth: "",
-        phone: "",
-        email: "",
-        medicalHistory: ""
-    });
-    const [schedule, setSchedule] = useState<{ [key: string]: Patient | null }>({});
-
-    const timeSlots = [
-        "08:00-08:30",
-        "08:30-09:00",
-        "09:00-09:30",
-        "09:30-10:00",
-        "10:00-10:30",
-        "10:30-11:00",
-        "11:00-11:30",
-        "11:30-12:00",
-        "12:00-12:30",
-        "12:30-13:00",
-        "13:00-13:30",
-        "13:30-14:00",
-        "14:00-14:30",
-        "14:30-15:00",
-        "15:00-15:30",
-        "15:30-16:00",
-        "16:00-16:30",
-        "16:30-17:00",
-        "17:00-17:30",
-        "17:30-18:00",
-    ];
-
-    const days = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-    ];
+    const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+    const [appointments, setAppointments] = useState<{ [key: string]: Appointment | null}>({});
 
 	const handleShowModal = async (timeSlot: string, day: string) => {
 		console.log("Modal Open Triggered");
         setSelectedTimeSlot(timeSlot);
         setSelectedDay(day);
+        setSelectedPatient(null);
         setSelectedDoctor(null);
         setShowModal(true);
     };
 
     const handleCreate = () => {
-        if (!selectedDoctor || !newPatient.name) {
+        if (!selectedDoctor || !selectedPatient) {
             alert("Please complete the form before confirming.");
             return;
         }
         const scheduleKey = `${selectedTimeSlot}-${selectedDay}`;
-        setSchedule((prev) => ({
+        setAppointments((prev) => ({
             ...prev,
-            [scheduleKey]: newPatient
+            [scheduleKey]: {
+                doctorId: selectedDoctor._id,
+                patientId: selectedPatient._id,
+                patientName: selectedPatient.name,
+                timeSlot: selectedTimeSlot,
+                day: selectedDay,
+            } as Appointment
         }));
-        alert(`Appointment scheduled for ${newPatient.name} with Dr. ${selectedDoctor.name}`);
+        alert(`Appointment scheduled for ${selectedPatient.name} with Dr. ${selectedDoctor.name}`);
         setShowModal(false);
     };
 
 	const handleDelete = (timeSlot: string, day: string) => {
         const scheduleKey = `${timeSlot}-${day}`;
-        setSchedule((prev) => ({
+        setAppointments((prev) => ({
             ...prev,
             [scheduleKey]: null
         }));
         alert(`Deleted the appointment for ${timeSlot} on ${day}`);
-    };
-
-    const handlePatientChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setNewPatient((prev) => ({
-            ...prev,
-            [name]: value
-        }));
     };
 
     return (
@@ -116,13 +111,13 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                             <td>{timeSlot}</td>
                             {days.map((day) => {
 								const scheduleKey = `${timeSlot}-${day}`;
-								const cellData = schedule[scheduleKey]
+								const cellData = appointments[scheduleKey]
                                 return (
                                     <td
                                         key={scheduleKey} style={{ textAlign: "center" }}>
                                         {cellData ? (
                                             <>
-                                                <div>{cellData.name}</div>
+                                                <div>{cellData.patientName}</div>
                                                 <button
                                                     className="button-delete"
                                                     onClick={() => handleDelete(timeSlot, day)}
@@ -161,15 +156,11 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                             <Form.Label>Select a Patient</Form.Label>
                             <Form.Select
                                 name="name"
-                                value={newPatient._id}
+                                value={selectedPatient?._id}
                                 onChange={(e) => {
                                     const selectedPatient = patients.find(patient => patient._id === e.target.value);
                                     if (selectedPatient) {
-                                        setNewPatient((prev) => ({
-                                            ...prev,
-                                            _id: selectedPatient._id,
-                                            name: selectedPatient.name
-                                        }));
+                                        setSelectedPatient(selectedPatient);
                                     }
                                 }}
                             >
@@ -185,7 +176,7 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                             <Form.Label>Select a Doctor</Form.Label>
                             <Form.Select
                                 as="select"
-                                value={selectedDoctor?._id || ""}
+                                value={selectedDoctor?._id}
                                 onChange={(e) => {
                                     const selectedDoc = doctors.find(doc => doc._id === e.target.value);
                                     setSelectedDoctor(selectedDoc || null);
