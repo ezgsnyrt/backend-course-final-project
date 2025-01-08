@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export interface IAppointment extends Document {
     doctorId: mongoose.Types.ObjectId;
     patientId: mongoose.Types.ObjectId;
+    patientName: String,
     date: Date;
     timeSlot: string;
     complaint: string;
@@ -20,6 +21,10 @@ const appointmentSchema: Schema<IAppointment> = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Patient',
             required: true
+        },
+        patientName: {
+            type: String,
+            required: false
         },
         date: {
             type: Date,
