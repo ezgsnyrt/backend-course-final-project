@@ -76,7 +76,6 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
 
         try {
             console.log("Submitting new appointment:", newAppointment);
-            // delete newDoctor["_id"];
             const response = await axios.post(API_BASE_URL + "/appointments", newAppointment);
             console.log("Appointment added successfully:", response.data);
             setAppointments((prev) => ({
