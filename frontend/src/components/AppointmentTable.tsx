@@ -3,13 +3,23 @@ import { DoctorTableProps } from "./Types/doctorDropdown.interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Modal, Button, Form } from "react-bootstrap";
+import { Doctor } from "./Types/doctorDropdown.interface";
+import { Patient } from "./Types/patient.interface";
 
-const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
+const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = ({ patients, doctors }) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
     const [selectedDay, setSelectedDay] = useState("");
-    const [selectedPatient, setSelectedPatient] = useState<string | null>(null);
-    const [schedule, setSchedule] = useState<{ [key: string]: string | null }>({});
+    const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+    const [newPatient, setNewPatient] = useState<Patient>({
+        _id: "",
+        name: "",
+        dateOfBirth: "",
+        phone: "",
+        email: "",
+        medicalHistory: "",
+    });
+    const [schedule, setSchedule] = useState<{ [key: string]: Patient | null }>({});
 
     const timeSlots = [
         "08:00-08:30",
@@ -48,21 +58,21 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
 		console.log("Modal Open Triggered");
         setSelectedTimeSlot(timeSlot);
         setSelectedDay(day);
-        setSelectedPatient("");
+        setSelectedDoctor(null);
         setShowModal(true);
     };
 
     const handleCreate = () => {
-        if (!selectedPatient) {
-            alert("Please select a doctor before confirming.");
+        if (!selectedDoctor || !newPatient.name) {
+            alert("Please complete the form before confirming.");
             return;
         }
         const scheduleKey = `${selectedTimeSlot}-${selectedDay}`;
         setSchedule((prev) => ({
             ...prev,
-            [scheduleKey]: selectedPatient
+            [scheduleKey]: newPatient
         }));
-        alert(`Scheduled ${selectedPatient} at ${selectedTimeSlot} on ${selectedDay}`);
+        alert(`Appointment scheduled for ${newPatient.name} with Dr. ${selectedDoctor.name}`);
         setShowModal(false);
     };
 
@@ -72,9 +82,16 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
             ...prev,
             [scheduleKey]: null
         }));
-        alert(`Deleted the schedule for ${timeSlot} on ${day}`);
+        alert(`Deleted the appointment for ${timeSlot} on ${day}`);
     };
 
+    const handlePatientChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setNewPatient((prev) => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
     return (
         <>
@@ -105,19 +122,12 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
                                         key={scheduleKey} style={{ textAlign: "center" }}>
                                         {cellData ? (
                                             <>
-                                                <div>{cellData}</div>
+                                                <div>{cellData.name}</div>
                                                 <button
                                                     className="button-delete"
-                                                    onClick={() =>
-                                                        handleDelete(
-                                                            timeSlot,
-                                                            day
-                                                        )
-                                                    }
+                                                    onClick={() => handleDelete(timeSlot, day)}
                                                 >
-                                                    <FontAwesomeIcon
-                                                        icon={faTrash}
-                                                    />
+                                                    <FontAwesomeIcon icon={faTrash}/>
                                                 </button>
                                             </>
                                         ) : (
@@ -125,9 +135,7 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
                                                 className="button-create"
                                                 onClick={() => handleShowModal(timeSlot, day)}
                                             >
-                                                <FontAwesomeIcon
-                                                    icon={faCalendarCheck}
-                                                />
+                                                <FontAwesomeIcon icon={faCalendarCheck}/>
                                             </button>
                                         )}
                                     </td>
@@ -148,8 +156,19 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
                             <Form.Control
                                 type="text"
                                 name="name"
-                                value=""
+                                value= {newPatient.name}
+                                onChange={handlePatientChange}
                                 placeholder="Enter patient's full name"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formAge" className="mb-3">
+                            <Form.Label>Date of Birth</Form.Label>
+                            <Form.Control
+                                type="date"
+                                name="dateOfBirth"
+                                value= {newPatient.dateOfBirth}
+                                onChange={handlePatientChange}
+                                placeholder="Enter date of birth"
                             />
                         </Form.Group>
                         <Form.Group controlId="formPhone" className="mb-3">
@@ -157,7 +176,8 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
                             <Form.Control
                                 type="text"
                                 name="phone"
-                                value=""
+                                value= {newPatient.phone}
+                                onChange={handlePatientChange}
                                 placeholder="Enter patient's phone number"
                             />
                         </Form.Group>
@@ -166,7 +186,8 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
                             <Form.Control
                                 type="email"
                                 name="email"
-                                value=""
+                                value= {newPatient.email}
+                                onChange={handlePatientChange}
                                 placeholder="Enter patient's email"
                             />
                         </Form.Group>
@@ -178,7 +199,8 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
                             <Form.Control
                                 type="text"
                                 name="medicalHistory"
-                                value=""
+                                value= {newPatient.medicalHistory}
+                                onChange={handlePatientChange}
                                 placeholder="Provide patient's medical history"
                             />
                         </Form.Group>
@@ -186,15 +208,16 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
                             <Form.Label>Select Doctor</Form.Label>
                             <Form.Control
                                 as="select"
-                                value={selectedPatient || ""}
-                                onChange={(e) =>
-                                    setSelectedPatient(e.target.value)
-                                }
+                                value={selectedDoctor?._id || ""}
+                                onChange={(e) => {
+                                    const selectedDoc = doctors.find(doc => doc._id === e.target.value);
+                                    setSelectedDoctor(selectedDoc || null);
+                                }}
                             >
                                 <option value="">Select a doctor...</option>
-                                {patients.map((patient, index) => (
-                                    <option key={index} value={patient.name}>
-                                        {patient.name}
+                                {doctors.map((doctor) => (
+                                    <option key={doctor._id} value={doctor._id}>
+                                        {doctor.name}
                                     </option>
                                 ))}
                             </Form.Control>
@@ -208,7 +231,7 @@ const AppointmentTable: React.FC<DoctorTableProps> = ({ patients }) => {
                     >
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleCreate}>Confirm</Button>
+                    <Button variant="primary" onClick={handleCreate}>Confirm Appointment</Button>
                 </Modal.Footer>
             </Modal>
         </>
