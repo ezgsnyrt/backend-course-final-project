@@ -8,7 +8,7 @@ import { Patient } from "./Types/patient.interface";
 import axios from "axios";
 import { Appointment } from "./Types/appointment.interface";
 
-const API_URL = "http://localhost:3000";
+const API_BASE_URL = "http://localhost:3000";
 const timeSlots = [
     "08:00-08:30",
     "08:30-09:00",
@@ -59,22 +59,34 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
         setShowModal(true);
     };
 
-    const handleCreate = () => {
+    const handleCreate = async () => {
         if (!selectedDoctor || !selectedPatient) {
             alert("Please complete the form before confirming.");
             return;
         }
         const scheduleKey = `${selectedTimeSlot}-${selectedDay}`;
-        setAppointments((prev) => ({
-            ...prev,
-            [scheduleKey]: {
-                doctorId: selectedDoctor._id,
-                patientId: selectedPatient._id,
-                patientName: selectedPatient.name,
-                timeSlot: selectedTimeSlot,
-                day: selectedDay,
-            } as Appointment
-        }));
+        const newAppointment = {
+            doctorId: selectedDoctor._id,
+            patientId: selectedPatient._id,
+            patientName: selectedPatient.name,
+            timeSlot: selectedTimeSlot,
+            day: selectedDay,
+        } as Appointment;
+
+
+        try {
+            console.log("Submitting new appointment:", newAppointment);
+            // delete newDoctor["_id"];
+            const response = await axios.post(API_BASE_URL + "/appointments", newAppointment);
+            console.log("Appointment added successfully:", response.data);
+            setAppointments((prev) => ({
+                ...prev,
+                [scheduleKey]: response.data //newAppointment
+            }));
+        } catch (error) {
+            console.error("Error adding appointment:", error);
+        }
+
         alert(`Appointment scheduled for ${selectedPatient.name} with Dr. ${selectedDoctor.name}`);
         setShowModal(false);
     };
