@@ -4,25 +4,42 @@ import Dropdown from "../components/Dropdown";
 import AppointmentTable from "../components/AppointmentTable";
 // import data from "../config/config.json";
 import { Doctor } from "../components/Types/doctorDropdown.interface";
+import { Patient } from "../components/Types/patient.interface";
+import axios from "axios";
+
+const API_BASE_URL = "http://localhost:3000";
 
 const HomePage = () => {
-    // State for doctors and users
     const [doctors, setDoctors] = useState<Doctor[]>([]);
-    const [patients, setPatients] = useState<any[]>([]); // Adjust type if you have a Patients interface
+    const [patients, setPatients] = useState<Patient[]>([]);
 
-    // Fetch doctors and patients data
+    const fetchPatients = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/patients`);
+            setPatients(response.data);
+        } catch (error) {
+            console.error("Error fetching patients:", error);
+        }
+    };
+
+    const fetchDoctors = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/doctors`);
+            setDoctors(response.data);
+        } catch (error) {
+            console.error("Error fetching doctors:", error);
+        }
+    };
+
     useEffect(() => {
-        // Simulate fetching data
-        setDoctors(doctors);
-        setPatients(patients);
+        fetchDoctors();
+        fetchPatients();
     }, []);
 
     return (
         <div>
             <NavBar />
-            {/* Pass doctors data to Dropdown */}
             <Dropdown doctors={doctors} />
-            {/* Pass doctors and patients data to DoctorTable */}
             <AppointmentTable doctors={doctors} patients={patients} />
         </div>
     );
