@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DoctorTableProps } from "./Types/doctorDropdown.interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarCheck, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Modal, Button, Form } from "react-bootstrap";
 import { Doctor } from "./Types/doctorDropdown.interface";
 import { Patient } from "./Types/patient.interface";
@@ -54,7 +54,7 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
         "Sunday",
     ];
 
-	const handleShowModal = (timeSlot: string, day: string) => {
+	const handleShowModal = async (timeSlot: string, day: string) => {
 		console.log("Modal Open Triggered");
         setSelectedTimeSlot(timeSlot);
         setSelectedDay(day);
@@ -100,7 +100,7 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                 striped
                 bordered
                 hover
-                className="text-center doctor-table"
+                className="text-center appointment-table"
             >
                 <thead>
                     <tr>
@@ -128,6 +128,12 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                                                     onClick={() => handleDelete(timeSlot, day)}
                                                 >
                                                     <FontAwesomeIcon icon={faTrash}/>
+                                                </button>
+                                                <button
+                                                    className="button-update"
+                                                    onClick={() => handleShowModal(timeSlot, day)}
+                                            >
+                                                    <FontAwesomeIcon icon={faPenToSquare}/>
                                                 </button>
                                             </>
                                         ) : (
