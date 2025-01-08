@@ -17,7 +17,7 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
         dateOfBirth: "",
         phone: "",
         email: "",
-        medicalHistory: "",
+        medicalHistory: ""
     });
     const [schedule, setSchedule] = useState<{ [key: string]: Patient | null }>({});
 
@@ -152,61 +152,32 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                 <Modal.Body>
                     <Form>
                         <Form.Group controlId="formName" className="mb-3">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control
-                                type="text"
+                            <Form.Label>Select a Patient</Form.Label>
+                            <Form.Select
                                 name="name"
-                                value= {newPatient.name}
-                                onChange={handlePatientChange}
-                                placeholder="Enter patient's full name"
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formAge" className="mb-3">
-                            <Form.Label>Date of Birth</Form.Label>
-                            <Form.Control
-                                type="date"
-                                name="dateOfBirth"
-                                value= {newPatient.dateOfBirth}
-                                onChange={handlePatientChange}
-                                placeholder="Enter date of birth"
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formPhone" className="mb-3">
-                            <Form.Label>Phone</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="phone"
-                                value= {newPatient.phone}
-                                onChange={handlePatientChange}
-                                placeholder="Enter patient's phone number"
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formEmail" className="mb-3">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                value= {newPatient.email}
-                                onChange={handlePatientChange}
-                                placeholder="Enter patient's email"
-                            />
-                        </Form.Group>
-                        <Form.Group
-                            controlId="formMedicalHistory"
-                            className="mb-3"
-                        >
-                            <Form.Label>Medical History</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="medicalHistory"
-                                value= {newPatient.medicalHistory}
-                                onChange={handlePatientChange}
-                                placeholder="Provide patient's medical history"
-                            />
+                                value={newPatient._id}
+                                onChange={(e) => {
+                                    const selectedPatient = patients.find(patient => patient._id === e.target.value);
+                                    if (selectedPatient) {
+                                        setNewPatient((prev) => ({
+                                            ...prev,
+                                            _id: selectedPatient._id,
+                                            name: selectedPatient.name
+                                        }));
+                                    }
+                                }}
+                            >
+                                <option value="">Select a patient...</option>
+                                {patients.map((patient) => (
+                                    <option key={patient._id} value={patient._id}>
+                                        {patient.name}
+                                    </option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group controlId="formName" className="mb-3">
-                            <Form.Label>Select Doctor</Form.Label>
-                            <Form.Control
+                            <Form.Label>Select a Doctor</Form.Label>
+                            <Form.Select
                                 as="select"
                                 value={selectedDoctor?._id || ""}
                                 onChange={(e) => {
@@ -218,6 +189,31 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                                 {doctors.map((doctor) => (
                                     <option key={doctor._id} value={doctor._id}>
                                         {doctor.name}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group controlId="formDay" className="mb-3">
+                            <Form.Label>Select a Day</Form.Label>
+                            <Form.Control
+                                type="date"
+                                value={selectedDay}
+                                onChange={(e) => setSelectedDay(e.target.value)}
+                            >
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group controlId="formTimeSlot" className="mb-3">
+                            <Form.Label>Select a Time Slot</Form.Label>
+                            <Form.Control
+                                as="select"
+                                value={selectedTimeSlot}
+                                onChange={(e) => setSelectedTimeSlot(e.target.value)}
+                            >
+                                <option value="">Select a Time Slot...</option>
+                                {timeSlots.map((timeSlot, index) => (
+                                    <option key={index} value={timeSlot}>
+                                        {timeSlot}
                                     </option>
                                 ))}
                             </Form.Control>
