@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Dropdown from "../components/Dropdown";
-import DoctorTable from "../components/DoctorTable";
+import AppointmentTable from "../components/AppointmentTable";
 // import data from "../config/config.json";
 import { Doctor } from "../components/Types/doctorDropdown.interface";
 
@@ -23,7 +23,7 @@ const HomePage = () => {
             {/* Pass doctors data to Dropdown */}
             <Dropdown doctors={doctors} />
             {/* Pass doctors and patients data to DoctorTable */}
-            <DoctorTable doctors={doctors} patients={patients} />
+            <AppointmentTable doctors={doctors} patients={patients} />
         </div>
     );
 };
