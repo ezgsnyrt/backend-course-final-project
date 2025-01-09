@@ -1,12 +1,11 @@
 import express, { Request, Response } from 'express';
 import Appointment from '../schemas/appointment.schema';
-import mongoose from 'mongoose';
 
 export const AppointmentsRouter = express.Router();
 
 AppointmentsRouter.get("/", async (req: Request, res: Response) => {
     try {
-        const appointments = await Appointment.find();
+        const appointments = await Appointment.find({ ...req.query });
         console.log(`[GET/appointments] Retrieved ${appointments.length} appointments.`);
         res.json(appointments);
     } catch (err) {

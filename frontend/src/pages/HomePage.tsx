@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
-import Dropdown from "../components/Dropdown";
 import AppointmentTable from "../components/AppointmentTable";
 // import data from "../config/config.json";
 import { Doctor } from "../components/Types/doctorDropdown.interface";
@@ -39,7 +38,6 @@ const HomePage = () => {
     return (
         <div>
             <NavBar />
-            <Dropdown doctors={doctors} />
             <AppointmentTable doctors={doctors} patients={patients} />
         </div>
     );

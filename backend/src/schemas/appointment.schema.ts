@@ -4,9 +4,9 @@ export interface IAppointment extends Document {
     doctorId: mongoose.Types.ObjectId;
     patientId: mongoose.Types.ObjectId;
     patientName: String,
-    date: Date;
-    timeSlot: string;
-    complaint: string;
+    day: String;
+    timeSlot: String;
+    complaint: String;
     status: 'Scheduled' | 'Completed' | 'Cancelled';
 }
 
@@ -26,9 +26,9 @@ const appointmentSchema: Schema<IAppointment> = new mongoose.Schema(
             type: String,
             required: false
         },
-        date: {
-            type: Date,
-            required: false
+        day: {
+            type: String,
+            required: true
         },
         timeSlot: {
             type: String,

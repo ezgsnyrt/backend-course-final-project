@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Doctor } from "./Types/doctorDropdown.interface";
 
 interface DropdownProps {
     doctors: Doctor[];
+    selectedDoctor: Doctor | null;
+    setDoctor: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const DoctorDropdown: React.FC<DropdownProps> = ({ doctors }) => {
+const DoctorDropdownComponent: React.FC<DropdownProps> = ({ doctors, setDoctor, selectedDoctor }) => {
     return (
         <Dropdown>
             <Dropdown.Toggle variant="primary" className="dropdown-basic">
-                Select a Doctor
+                { selectedDoctor ? selectedDoctor.name : 'Select a Doctor' }
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
                 {doctors.map((doctor) => (
                     <Dropdown.Item
                         key={doctor._id}
-                        href={`#doctor-${doctor._id}`}
+                        // href={`#doctor-${doctor._id}`}
+                        onClick={() => {
+                            setDoctor(doctor)
+                        }}
                     >
                         {doctor.name}
                     </Dropdown.Item>
@@ -27,4 +32,4 @@ const DoctorDropdown: React.FC<DropdownProps> = ({ doctors }) => {
     );
 };
 
-export default DoctorDropdown;
+export default DoctorDropdownComponent;
