@@ -5,6 +5,8 @@ import { connectToDB } from './database/db';
 import { DoctorsRouter } from './routes/doctors.routes';
 import { PatientsRouter } from './routes/patients.routes';
 import { AppointmentsRouter } from './routes/appointments.routes';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swaggerConfig';
 
 dotenv.config();
 
@@ -18,6 +20,9 @@ const options: cors.CorsOptions = {
 
 app.use(cors(options));
 app.use(express.json());
+
+// Swagger UI Integration
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
