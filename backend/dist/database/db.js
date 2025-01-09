@@ -18,11 +18,9 @@ const connectToDB = () => __awaiter(void 0, void 0, void 0, function* () {
         (0, mongoose_1.set)('strictQuery', false);
         const db = yield (0, mongoose_1.connect)(mongoUri);
         console.log('MongoDB connected to', db.connection.name);
-        // Emit an event when the connection is successful
     }
     catch (err) {
         console.error("Failed to connect to MongoDB", err);
-        // Emit an event when there's an error
     }
 });
 exports.connectToDB = connectToDB;

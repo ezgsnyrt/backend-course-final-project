@@ -6,7 +6,7 @@ import { DoctorsRouter } from './routes/doctors.routes';
 import { PatientsRouter } from './routes/patients.routes';
 import { AppointmentsRouter } from './routes/appointments.routes';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './swaggerConfig';
+import swaggerSpec from './documentation/swaggerConfig';
 
 dotenv.config();
 
