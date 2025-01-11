@@ -1,0 +1,137 @@
+.appointment-table
+.doctor-details-table,
+.patient-details-table {
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .table {
+        th {
+            background-color: colors.$bg-color8;
+            color: colors.$text-color1;
+            font-weight: fonts.$font-weight-bold;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+    }
+}
+
+.button-delete,
+.button-create,
+.button-update {
+    color: colors.$primary-color;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.button-create {
+    background-color: colors.$button-color2;
+
+    &:hover {
+        background-color: colors.$hover-color7;
+    }
+}
+
+.button-delete {
+    background-color: colors.$button-color1;
+
+    &:hover {
+        background-color: colors.$hover-color6;
+    }
+}
+
+.button-update {
+    background-color: colors.$bg-color6;
+
+    &:hover {
+        background-color: colors.$hover-color5;
+    }
+}
+
+@media (min-width: 1200px) {
+    .table-responsive .appointment-table,
+    .doctor-details-table,
+    .patient-details-table {
+        font-size: fonts.$font-size-sm;
+    }
+
+    th {
+        text-transform:uppercase;
+    }
+
+    .button-delete,
+    .button-create,
+    .button-update {
+        font-size: fonts.$font-size-xs;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+@media (min-width:992px) and (max-width: 1199px) {
+    button {
+        font-size: fonts.$font-size-sm;
+        padding: 0.25rem 0.5rem;
+    }
+
+    th {
+        text-transform:uppercase;
+    }
+
+}
+
+@media (min-width:768px) and (max-width: 991px) {
+        table,
+        button {
+            font-size: fonts.$font-size-xs;
+        }
+
+        th {
+            text-transform:uppercase;
+        }
+
+        .button-delete,
+        .button-create,
+        .button-update {
+            font-size: fonts.$font-size-xs;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .button-delete,
+        .button-update {
+            margin-top: 0.2rem;
+        }
+}
+
+@media (min-width:600px) and (max-width:767px) {
+    .table {
+        width: 100%;
+        font-size: fonts.$font-size-xxs;
+
+        thead {
+            width: 100%;
+
+            th {
+                text-transform:capitalize;
+            }
+        }
+
+        button {
+            margin-bottom: 0.2rem;
+        }
+
+        .button-delete,
+        .button-create,
+        .button-update {
+            font-size: fonts.$font-size-xxs;
+            color: colors.$primary-color;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+        }
+    }
+}

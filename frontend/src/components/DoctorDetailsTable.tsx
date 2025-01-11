@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import { Doctor } from "./Types/doctorDropdown.interface";
 // import data from "../config/config.json";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "react-bootstrap";
 
 const API_BASE_URL = "http://localhost:3000";
 
@@ -194,7 +197,7 @@ const DoctorDetailsTable: React.FC = () => {
     });
 
     return (
-        <div className="doctor-details-table">
+        <>
             {/* Button for adding a new doctor */}
             <Button
                 variant="primary"
@@ -203,161 +206,161 @@ const DoctorDetailsTable: React.FC = () => {
             >
                 Add New
             </Button>
-
-            <Table responsive bordered hover className="text-center">
-                <thead>
-                    <tr>
-                        {columns.map((col) => (
-                            <th key={col.key}>{col.label}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {doctors.map((doctor) => (
-                        <tr key={doctor._id}>
+            <div className="doctor-details-table">
+                <Table responsive bordered hover className="text-center">
+                    <thead>
+                        <tr>
                             {columns.map((col) => (
-                                <td key={col.key}>
-                                    {col.key === "actions" ? (
-                                        <>
-                                            <Button
-                                                variant="warning"
-                                                size="sm"
-                                                className="me-2"
-                                                onClick={() => {
-                                                    setNewDoctor(doctor);
-                                                    setShowModal(true);
-                                                }}
-                                            >
-                                                Update
-                                            </Button>
-                                            <Button
-                                                variant="danger"
-                                                size="sm"
-                                                onClick={() => doctor._id ? handleDelete(doctor._id) : console.error("ID not found")}
-                                                >
-                                                Delete
-                                            </Button>
-                                        </>
-                                    ) : (
-                                        (doctor as any)[col.key]
-                                    )}
-                                </td>
+                                <th key={col.key}>{col.label}</th>
                             ))}
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                        {doctors.map((doctor) => (
+                            <tr key={doctor._id}>
+                                {columns.map((col) => (
+                                    <td key={col.key}>
+                                        {col.key === "actions" ? (
+                                            <>
+                                                <button
+                                                    // variant="warning"
+                                                    // size="sm"
+                                                    className="me-2 button-update"
+                                                    onClick={() => {
+                                                        setNewDoctor(doctor);
+                                                        setShowModal(true);
+                                                    }}
+                                                >
+                                                    <FontAwesomeIcon icon={faPenToSquare}/>
+                                                </button>
+                                                <button
+                                                    className="me-2 button-delete"
+                                                    onClick={() => doctor._id ? handleDelete(doctor._id) : console.error("ID not found")}
+                                                    >
+                                                    <FontAwesomeIcon icon={faTrash}/>
+                                                </button>
+                                            </>
+                                        ) : (
+                                            (doctor as any)[col.key]
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
 
-            {/* New doctor modal with form inputs */}
-            <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add New Doctor</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group controlId="formName" className="mb-3">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="name"
-                                value={newDoctor.name}
-                                onChange={handleChange}
-                                placeholder="Enter full name"
-                                isInvalid={!!errors.name}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.name}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formTitle" className="mb-3">
-                            <Form.Label>Title</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="title"
-                                value={newDoctor.title}
-                                onChange={handleChange}
-                                placeholder="Enter title"
-                                isInvalid={!!errors.title}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.title}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formMajor" className="mb-3">
-                            <Form.Label>Major</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="major"
-                                value={newDoctor.major}
-                                onChange={handleChange}
-                                placeholder="Enter major"
-                                isInvalid={!!errors.major}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.major}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formPhone" className="mb-3">
-                            <Form.Label>Phone</Form.Label>
-                            <Form.Control
-                                type="phone"
-                                name="phone"
-                                value={newDoctor.phone}
-                                onChange={handleChange}
-                                placeholder="Enter phone"
-                                isInvalid={!!errors?.phone}
-                            />
-                            <Form.Text className="text-muted">
-                                Must be 9 or 10 digits, starting with 0. E.g.,
-                                012345678 or 0123456789
-                            </Form.Text>
-                            <Form.Control.Feedback type="invalid">
-                                {errors?.phone}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formEmail" className="mb-3">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                value={newDoctor.email}
-                                onChange={handleChange}
-                                placeholder="Enter email"
-                                isInvalid={!!errors?.email}
-                            />
-                            <Form.Text className="text-muted">
-                                E.g., email@example.com
-                            </Form.Text>
-                            <Form.Control.Feedback type="invalid">
-                                {errors?.email}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formLanguages" className="mb-3">
-                            <Form.Label>Languages</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="languages"
-                                value={newDoctor.languages}
-                                onChange={handleChange}
-                                placeholder="Enter languages"
-                                isInvalid={!!errors.languages}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.languages}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
-                        Submit
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
+                {/* New doctor modal with form inputs */}
+                <Modal show={showModal} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add New Doctor</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="formName" className="mb-3">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="name"
+                                    value={newDoctor.name}
+                                    onChange={handleChange}
+                                    placeholder="Enter full name"
+                                    isInvalid={!!errors.name}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.name}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formTitle" className="mb-3">
+                                <Form.Label>Title</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="title"
+                                    value={newDoctor.title}
+                                    onChange={handleChange}
+                                    placeholder="Enter title"
+                                    isInvalid={!!errors.title}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.title}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formMajor" className="mb-3">
+                                <Form.Label>Major</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="major"
+                                    value={newDoctor.major}
+                                    onChange={handleChange}
+                                    placeholder="Enter major"
+                                    isInvalid={!!errors.major}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.major}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formPhone" className="mb-3">
+                                <Form.Label>Phone</Form.Label>
+                                <Form.Control
+                                    type="phone"
+                                    name="phone"
+                                    value={newDoctor.phone}
+                                    onChange={handleChange}
+                                    placeholder="Enter phone"
+                                    isInvalid={!!errors?.phone}
+                                />
+                                <Form.Text className="text-muted">
+                                    Must be 9 or 10 digits, starting with 0. E.g.,
+                                    012345678 or 0123456789
+                                </Form.Text>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors?.phone}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formEmail" className="mb-3">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    value={newDoctor.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter email"
+                                    isInvalid={!!errors?.email}
+                                />
+                                <Form.Text className="text-muted">
+                                    E.g., email@example.com
+                                </Form.Text>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors?.email}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formLanguages" className="mb-3">
+                                <Form.Label>Languages</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="languages"
+                                    value={newDoctor.languages}
+                                    onChange={handleChange}
+                                    placeholder="Enter languages"
+                                    isInvalid={!!errors.languages}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.languages}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleSubmit}>
+                            Submit
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+        </>
     );
 };
 

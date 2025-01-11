@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 // import data from "../config/config.json";
 import { Patient } from "./Types/patient.interface";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const API_BASE_URL = "http://localhost:3000";
 
@@ -203,7 +207,7 @@ const PatientDetailsTable: React.FC = () => {
 
 
     return (
-        <div className="patient-details-table">
+        <>
             <Button
                 variant="primary"
                 onClick={handleShowModal}
@@ -211,175 +215,175 @@ const PatientDetailsTable: React.FC = () => {
             >
                 Add New
             </Button>
-
-            <Table responsive bordered hover className="text-center">
-                <thead>
-                    <tr>
-                        {columns.map((col) => (
-                            <th key={col.key}>{col.label}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {patients.map((patient) => (
-                        <tr key={patient._id}>
+            <div className="patient-details-table">
+                <Table responsive bordered hover className="text-center">
+                    <thead>
+                        <tr>
                             {columns.map((col) => (
-                                <td key={col.key}>
-                                    {col.key === "actions" ? (
-                                        <>
-                                            <Button
-                                                variant="warning"
-                                                size="sm"
-                                                className="me-2"
-                                                // onClick={() => alert(`Updating patient: ${patient.name}`)}
-                                                onClick={() => {
-                                                    setNewPatient(patient);
-                                                    setShowModal(true);
-                                                }}
-                                            >
-                                                Update
-                                            </Button>
-                                            <Button
-                                                variant="danger"
-                                                size="sm"
-                                                onClick={() => patient._id ? handleDelete(patient._id) : console.error("ID not found")}
-                                                >
-                                                Delete
-                                            </Button>
-                                        </>
-                                    ) : col.key === "age" ? (
-                                        calculateAge(patient.dateOfBirth)
-                                    ) : (
-                                        (patient as any)[col.key]
-                                    )}
-                                </td>
+                                <th key={col.key}>{col.label}</th>
                             ))}
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
-            <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add New Patient</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group controlId="formName" className="mb-3">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="name"
-                                value={newPatient.name}
-                                onChange={handleChange}
-                                placeholder="Enter full name"
-                                isInvalid={!!errors.name}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.name}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formAge" className="mb-3">
-                            <Form.Label>Date of Birth</Form.Label>
-                            <Form.Control
-                                type="date"
-                                name="dateOfBirth"
-                                value={newPatient.dateOfBirth}
-                                onChange={handleChange}
-                                placeholder="Enter date of birth"
-                                isInvalid={!!errors.dateOfBirth}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.dateOfBirth}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formGender" className="mb-3">
-                            <Form.Label>Gender</Form.Label>
-                            <Form.Select
-                                name="gender"
-                                value={newPatient.gender}
-                                onChange={(e) => handleChange(e as any)}
-                                isInvalid={!!errors.gender}
+                    </thead>
+                    <tbody>
+                        {patients.map((patient) => (
+                            <tr key={patient._id}>
+                                {columns.map((col) => (
+                                    <td key={col.key}>
+                                        {col.key === "actions" ? (
+                                            <>
+                                                <Button
+                                                    variant="warning"
+                                                    size="sm"
+                                                    className="me-2 button-update"
+                                                    // onClick={() => alert(`Updating patient: ${patient.name}`)}
+                                                    onClick={() => {
+                                                        setNewPatient(patient);
+                                                        setShowModal(true);
+                                                    }}
+                                                >
+                                                    <FontAwesomeIcon icon={faPenToSquare}/>
+                                                </Button>
+                                                <button
+                                                    className="me-2 button-delete"
+                                                    onClick={() => patient._id ? handleDelete(patient._id) : console.error("ID not found")}
+                                                    >
+                                                    <FontAwesomeIcon icon={faTrash}/>
+                                                </button>
+                                            </>
+                                        ) : col.key === "age" ? (
+                                            calculateAge(patient.dateOfBirth)
+                                        ) : (
+                                            (patient as any)[col.key]
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+                <Modal show={showModal} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add New Patient</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="formName" className="mb-3">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="name"
+                                    value={newPatient.name}
+                                    onChange={handleChange}
+                                    placeholder="Enter full name"
+                                    isInvalid={!!errors.name}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.name}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formAge" className="mb-3">
+                                <Form.Label>Date of Birth</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    name="dateOfBirth"
+                                    value={newPatient.dateOfBirth}
+                                    onChange={handleChange}
+                                    placeholder="Enter date of birth"
+                                    isInvalid={!!errors.dateOfBirth}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.dateOfBirth}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formGender" className="mb-3">
+                                <Form.Label>Gender</Form.Label>
+                                <Form.Select
+                                    name="gender"
+                                    value={newPatient.gender}
+                                    onChange={(e) => handleChange(e as any)}
+                                    isInvalid={!!errors.gender}
+                                >
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </Form.Select>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.gender}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formPhone" className="mb-3">
+                                <Form.Label>Phone</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="phone"
+                                    value={newPatient.phone}
+                                    onChange={handleChange}
+                                    placeholder="Enter phone number"
+                                    isInvalid={!!errors.phone}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.phone}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formEmail" className="mb-3">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    value={newPatient.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter email"
+                                    isInvalid={!!errors.email}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.email}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="formAddress" className="mb-3">
+                                <Form.Label>Address</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="address"
+                                    value={newPatient.address}
+                                    onChange={handleChange}
+                                    placeholder="Enter address"
+                                    isInvalid={!!errors.address}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.address}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group
+                                controlId="formMedicalHistory"
+                                className="mb-3"
                             >
-                                <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </Form.Select>
-                            <Form.Control.Feedback type="invalid">
-                                {errors.gender}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formPhone" className="mb-3">
-                            <Form.Label>Phone</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="phone"
-                                value={newPatient.phone}
-                                onChange={handleChange}
-                                placeholder="Enter phone number"
-                                isInvalid={!!errors.phone}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.phone}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formEmail" className="mb-3">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                value={newPatient.email}
-                                onChange={handleChange}
-                                placeholder="Enter email"
-                                isInvalid={!!errors.email}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.email}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="formAddress" className="mb-3">
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="address"
-                                value={newPatient.address}
-                                onChange={handleChange}
-                                placeholder="Enter address"
-                                isInvalid={!!errors.address}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.address}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group
-                            controlId="formMedicalHistory"
-                            className="mb-3"
-                        >
-                            <Form.Label>Medical History</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="medicalHistory"
-                                value={newPatient.medicalHistory}
-                                onChange={handleChange}
-                                placeholder="Provide health background"
-                                isInvalid={!!errors.medicalHistory}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.medicalHistory}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
-                        Submit
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
+                                <Form.Label>Medical History</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="medicalHistory"
+                                    value={newPatient.medicalHistory}
+                                    onChange={handleChange}
+                                    placeholder="Provide health background"
+                                    isInvalid={!!errors.medicalHistory}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.medicalHistory}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleSubmit}>
+                            Submit
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+        </>
     );
 };
 

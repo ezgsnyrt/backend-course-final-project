@@ -11,26 +11,22 @@ import { Appointment } from "./Types/appointment.interface";
 
 const API_BASE_URL = "http://localhost:3000";
 const timeSlots = [
-    "08:00-08:30",
-    "08:30-09:00",
-    "09:00-09:30",
-    "09:30-10:00",
-    "10:00-10:30",
-    "10:30-11:00",
-    "11:00-11:30",
-    "11:30-12:00",
-    "12:00-12:30",
-    "12:30-13:00",
-    "13:00-13:30",
-    "13:30-14:00",
-    "14:00-14:30",
-    "14:30-15:00",
-    "15:00-15:30",
-    "15:30-16:00",
-    "16:00-16:30",
-    "16:30-17:00",
-    "17:00-17:30",
-    "17:30-18:00",
+    "09:00 - 09:30",
+    "09:30 - 10:00",
+    "10:00 - 10:30",
+    "10:30 - 11:00",
+    "11:00 - 11:30",
+    "11:30 - 12:00",
+    "12:00 - 12:30",
+    "12:30 - 13:00",
+    "13:00 - 13:30",
+    "13:30 - 14:00",
+    "14:00 - 14:30",
+    "14:30 - 15:00",
+    "15:00 - 15:30",
+    "15:30 - 16:00",
+    "16:00 - 16:30",
+    "16:30 - 17:00"
 ];
 
 const days = [
@@ -174,8 +170,8 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                         <tr key={timeSlot}>
                             <td>{timeSlot}</td>
                             {days.map((day) => {
-								const scheduleKey = `${timeSlot}-${day}`;
-								const cellData = appointments[scheduleKey]
+                                const scheduleKey = `${timeSlot}-${day}`;
+                                const cellData = appointments[scheduleKey]
                                 return (
                                     <td
                                         key={scheduleKey} style={{ textAlign: "center" }}>
@@ -183,7 +179,7 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
                                             <>
                                                 <div>{cellData.patientName}</div>
                                                 <button
-                                                    className="button-delete"
+                                                    className="button-delete me-2"
                                                     onClick={() => handleDelete(cellData)}
                                                 >
                                                     <FontAwesomeIcon icon={faTrash}/>
