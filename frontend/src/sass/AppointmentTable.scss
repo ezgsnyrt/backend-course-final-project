@@ -1,3 +1,10 @@
+.app-title {
+    font-size: fonts.$font-size-xxl;
+    margin: 1rem;
+    font-weight: fonts.$font-weight-superbold;
+    letter-spacing: fonts.$letter-spacing-xs;
+}
+
 .table-responsive {
     width: 100%;
     display: flex;

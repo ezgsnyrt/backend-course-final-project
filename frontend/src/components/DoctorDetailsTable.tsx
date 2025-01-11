@@ -207,7 +207,7 @@ const DoctorDetailsTable: React.FC = () => {
                 Add New
             </Button>
             <div className="doctor-details-table">
-                <Table responsive bordered hover className="text-center">
+                <Table responsive striped bordered hover className="text-center" variant="dark">
                     <thead>
                         <tr>
                             {columns.map((col) => (

@@ -146,17 +146,12 @@ const AppointmentTable: React.FC<{ patients: Patient[], doctors: Doctor[] }> = (
 
     return (
         <>
+            <h1 className="app-title text-center">ADMIN DASHBOARD</h1>
             <DoctorDropdownComponent
                 doctors={doctors}
                 setDoctor={setSelectedDoctor}
                 selectedDoctor={selectedDoctor}/>
-            <Table
-                responsive
-                striped
-                bordered
-                hover
-                className="text-center appointment-table"
-            >
+            <Table responsive striped bordered hover className="text-center appointment-table" variant="dark">
                 <thead>
                     <tr>
                         <th>Time</th>

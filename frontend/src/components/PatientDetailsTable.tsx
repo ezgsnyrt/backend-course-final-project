@@ -216,7 +216,7 @@ const PatientDetailsTable: React.FC = () => {
                 Add New
             </Button>
             <div className="patient-details-table">
-                <Table responsive bordered hover className="text-center">
+                <Table responsive striped bordered hover className="text-center" variant="dark">
                     <thead>
                         <tr>
                             {columns.map((col) => (
