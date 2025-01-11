@@ -202,7 +202,7 @@ const DoctorDetailsTable: React.FC = () => {
             <Button
                 variant="primary"
                 onClick={handleShowModal}
-                className="mb-3"
+                className="mb-2 ms-3 mt-3"
             >
                 Add New
             </Button>
