@@ -3,8 +3,7 @@
     color: colors.$primary-color;
     font-weight: fonts.$font-weight-medium;
     border-radius: 0.5rem;
-    font-size: fonts.$font-size-md;
-    margin: 1%;
+    margin: 0 0 1% 1rem;
 
     &:hover {
         background-color: colors.$hover-color3;
@@ -19,12 +18,43 @@
 
     .dropdown-item {
         color: colors.$text-color1;
-        padding: 0.3rem 1rem;
-        font-size: fonts.$font-size-md;
 
         &:hover {
             background-color: colors.$bg-color5;
             color: colors.$hover-color4;
         }
+    }
+}
+
+@media (min-width: 1200px) {
+    .dropdown-basic {
+        font-size: fonts.$font-size-md;
+    }
+
+    .dropdown-item {
+        padding: 0.3rem 1rem;
+        font-size: fonts.$font-size-md;
+    }
+}
+
+@media (min-width:768px) and (max-width: 1199px) {
+    .dropdown-basic {
+        font-size: fonts.$font-size-sm;
+    }
+
+    .dropdown-item {
+        padding: 0.2rem 0.9rem;
+        font-size: fonts.$font-size-sm;
+    }
+}
+
+@media (min-width:600px) and (max-width:767px) {
+    .dropdown-basic {
+        font-size: fonts.$font-size-xs;
+    }
+
+    .dropdown-item {
+        padding: 0.2rem 0.8rem;
+        font-size: fonts.$font-size-xs;
     }
 }
