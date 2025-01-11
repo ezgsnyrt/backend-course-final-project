@@ -14,15 +14,16 @@ This project represents the initial version developed and presented as the final
 ## Features
 
 ### 👩‍⚕️ Doctor Management
-- Add, update, delete and list doctors
+- Add, update, delete and list doctors using a modal form containing a structured input field with form controllers and validation for accurate data entry
 - View the recent doctor details in a structured table when clicked on Doctors list in Navbar
 
 ### 👥 Patient Management
-- Add, update, delete and list patients
+- Add, update, delete and list patients using a modal form containing a structured input field with form controllers and validation for accurate data entry
 - View the recent patient details in a structured table when clicked on Patients list in Navbar
 
 ### 📆 Appointment Management
-- Create, update, delete and list appointments
+- Create delete and list appointments using a dropdown that opens a form listing registered doctors and patients
+- Update the assingment by using another form clicking on button-update in the appointments table
 - Visualize appointments in a static weekly schedule format
 
 ### 📑 API Documentation
@@ -51,4 +52,3 @@ This project has been developed and presented as the final assignment for the **
 
 - **📅 Dynamic Weekly Schedule Visualization:** Appointments will be visualized in a dynamic weekly schedule format instead of a static one.
 - **📱 Responsive Design:** The application will be enhanced to be fully responsive for devices under 600px width.
-- **📈 Appointment Statistics:** Additional statistics related to completed appointments will be added for better insights.
